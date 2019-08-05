@@ -30,7 +30,7 @@ public:
 	 * 
 	 * @param buffer Screen buffer or other buffer where the Graphic settings screen has to be drawn.
 	 */
-	int showGfxMenu(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font);
+	int drawGfxMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font);
 
 	/**
 	 * @brief Destroy the GFXSettingsMenu object and performs the required clean-up.

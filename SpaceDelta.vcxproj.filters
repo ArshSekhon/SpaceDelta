@@ -45,6 +45,15 @@
     <ClCompile Include="screens\SoundSettingsMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="screens\GameIntroScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screens\GameHelpScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screens\GameScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\ui-elem\loading-banner.bmp">
@@ -101,6 +110,9 @@
     <Image Include="assets\ui-elem\pointer.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\ui-elem\help-banner.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -133,12 +145,22 @@
     <ClInclude Include="screens\SoundSettingsMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="screens\GameIntroScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\GameHelpScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\GameScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SpaceDelta.cfg" />
     <None Include="assets\font-36.pcx" />
     <None Include="assets\font-tnr-16.pcx" />
     <None Include="assets\sounds\music.mid" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sounds\boing.wav">

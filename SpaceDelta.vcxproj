@@ -156,7 +156,10 @@
   <ItemGroup>
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="screens\GameScreen.cpp" />
     <ClCompile Include="screens\CreditsScreen.cpp" />
+    <ClCompile Include="screens\GameHelpScreen.cpp" />
+    <ClCompile Include="screens\GameIntroScreen.cpp" />
     <ClCompile Include="screens\GFXSettingsMenu.cpp" />
     <ClCompile Include="screens\MainMenu.cpp" />
     <ClCompile Include="screens\SettingsMenu.cpp" />
@@ -179,6 +182,7 @@
     <Image Include="assets\sprites\red-smallship.png" />
     <Image Include="assets\sprites\redbig.png" />
     <Image Include="assets\ui-elem\banner.bmp" />
+    <Image Include="assets\ui-elem\help-banner.bmp" />
     <Image Include="assets\ui-elem\mainmenu-buttons.bmp" />
     <Image Include="assets\ui-elem\cursor-hand.bmp" />
     <Image Include="assets\ui-elem\font.bmp" />
@@ -189,7 +193,10 @@
     <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="screens\GameScreen.h" />
     <ClInclude Include="screens\CreditsScreen.h" />
+    <ClInclude Include="screens\GameHelpScreen.h" />
+    <ClInclude Include="screens\GameIntroScreen.h" />
     <ClInclude Include="screens\GFXSettingsMenu.h" />
     <ClInclude Include="screens\MainMenu.h" />
     <ClInclude Include="screens\SettingsMenu.h" />
@@ -198,6 +205,7 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="assets\font-36.pcx" />
     <None Include="assets\font-tnr-16.pcx" />
     <None Include="assets\sounds\music.mid" />

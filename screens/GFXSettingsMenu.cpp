@@ -31,7 +31,7 @@ GFXSettingsMenu::~GFXSettingsMenu() {
 	this->bannerBitmap = NULL;
 }
 
-int GFXSettingsMenu::showGfxMenu(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font ) {
+int GFXSettingsMenu::drawGfxMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font ) {
 	gameState->gameScreen = GAME_SCREEN_GFX_SETTINGS;
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);

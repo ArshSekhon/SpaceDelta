@@ -1,6 +1,5 @@
 #pragma once
-#include "Constants.h"
-#include "ConfigManager.h"
+#include "Constants.h" 
 #include "SoundManager.h"
 
 #include "screens/MainMenu.h"
@@ -8,6 +7,9 @@
 #include "screens/SettingsMenu.h"
 #include "screens/GFXSettingsMenu.h"
 #include "screens/SoundSettingsMenu.h"
+#include "screens/GameIntroScreen.h"
+#include "screens/GameHelpScreen.h"
+#include "screens/GameScreen.h"
 
 #include "Constants.h"
 #include "ConfigManager.h" 
@@ -19,13 +21,16 @@ class GameManager
 private:
 
 	SoundManager* soundManager;
-	ConfigManager configManager;
 
 	MainMenu* mainMenu;
 	CreditsScreen* creditsScreen;
 	SettingsMenu* settingsMenu;
 	GFXSettingsMenu* gfxSettingsMenu;
 	SoundSettingsMenu* soundSettingsMenu;
+	GameIntroScreen* gameIntroScreen;
+	GameHelpScreen* gameHelpScreen;
+	GameScreen* gameScreen;
+	
 
 	BITMAP* cursor;
 	BITMAP* cursorHand;
@@ -39,6 +44,8 @@ private:
 	FONT* textFont;
 
 	int pointerAsCursor;
+	int muteActionTriggered;
+	int musicPlaying = 1;
 
 	void showLoadingScreen();
 	void renderFrameToBuffer(BITMAP* buffer);

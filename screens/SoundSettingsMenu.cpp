@@ -19,7 +19,7 @@ SoundSettingsMenu::~SoundSettingsMenu() {
 }
 
 
-void SoundSettingsMenu::showSoundSettingsMenu(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font) {
+void SoundSettingsMenu::drawSoundSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font) {
 
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);

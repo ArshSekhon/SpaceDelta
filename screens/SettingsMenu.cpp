@@ -9,7 +9,7 @@ SettingsMenu::~SettingsMenu() {
 	destroy_bitmap(this->bannerBitmap);
 }
 
-void SettingsMenu::showSettingsMenu(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font) {
+void SettingsMenu::drawSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font) {
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
 

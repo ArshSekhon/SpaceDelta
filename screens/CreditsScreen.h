@@ -1,5 +1,5 @@
 #pragma once
-#include "../Constants.h"
+#include "../constants.h"
 #include "../Utility.h"
 #include <allegro.h>
 
@@ -32,6 +32,6 @@ public:
 	 * 
 	 * @param buffer Screen buffer or other buffer where the Credits screen has to be drawn.
 	 */
-	void showCreditsScreen(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont);
+	void drawCreditsScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont);
 };
 

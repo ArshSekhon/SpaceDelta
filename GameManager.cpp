@@ -85,6 +85,10 @@ int GameManager::init() {
 	}
 	set_volume(gameState->sound_volume * 25.5, gameState->music_volume * 25.5);
 
+
+	soundManager = new SoundManager(gameState);
+	soundManager->playBgMusic(1);
+
 	//install mouse
 	if (install_mouse() == -1) {
 		allegro_message("ERROR: Failed to install Mouse.");
@@ -115,14 +119,12 @@ int GameManager::init() {
 	settingsMenu = new SettingsMenu(gameState);
 	gfxSettingsMenu = new GFXSettingsMenu(gameState, &configManager);
 	soundSettingsMenu = new SoundSettingsMenu(gameState, &configManager);
-	creditsScreen = new CreditsScreen(gameState);
-	//quizChapterSelectionMenu = new QuizChapterSelectionMenu(gameState);
-	//
-	//gameIntroScreen = new GameIntroScreen(gameState, &configManager);
-	soundManager = new SoundManager(gameState);
-	//gameQuestionScreen = new GameQuestionScreen(gameState, soundManager);
 
-	soundManager->playBgMusic(1);
+	creditsScreen = new CreditsScreen(gameState); 
+	gameHelpScreen = new GameHelpScreen(gameState);
+	gameIntroScreen = new GameIntroScreen(gameState, &configManager);
+	gameScreen = new GameScreen(gameState);
+
 
 	rest(1000);
 
@@ -144,6 +146,23 @@ void GameManager::runGameLoop() {
 		if ((mouse_b & 1) && gameState->mouseHover == 1) {
 			gameState->pendingMouseClick = 1;
 		}
+
+		if ((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_M]) {
+			muteActionTriggered = 1;
+		} else if (!((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_M]) && muteActionTriggered==1) {
+				muteActionTriggered = 0; 
+				if (musicPlaying) {
+					musicPlaying = 0;
+					soundManager->stopBgMusic();
+				}
+				else {
+					musicPlaying = 1;
+					soundManager->playBgMusic(1);
+				}
+		}
+
+
+
 		// if gfx settings change need to create new buffer
 		if (gameState->gfxSettingsUpdated) {
 			gameState->gfxSettingsUpdated = 0;
@@ -228,17 +247,25 @@ void GameManager::renderFrameToBuffer(BITMAP* buffer) {
 		gameState->gameScreen = mainMenu->showMainMenu(buffer);
 		break;
 	case GAME_SCREEN_SETTINGS:
-		settingsMenu->showSettingsMenu(buffer, this->menuBackground, this->headingFont);
+		settingsMenu->drawSettingsMenuAndHandleInput(buffer, this->menuBackground, this->headingFont);
 		break;
 	case GAME_SCREEN_GFX_SETTINGS:
-		gfxSettingsMenu->showGfxMenu(buffer, this->menuBackground, this->headingFont);
+		gfxSettingsMenu->drawGfxMenuAndHandleInput(buffer, this->menuBackground, this->headingFont);
 		break;
 	case GAME_SCREEN_SOUND_SETTINGS:
-		soundSettingsMenu->showSoundSettingsMenu(buffer, this->menuBackground, this->headingFont);
+		soundSettingsMenu->drawSoundSettingsMenuAndHandleInput(buffer, this->menuBackground, this->headingFont);
 		break;  
 	case GAME_SCREEN_CREDITS:
-		creditsScreen->showCreditsScreen(buffer, this->menuBackground, this->headingFont, this->textFont);
+		creditsScreen->drawCreditsScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont);
 		break;
+	case GAME_SCREEN_START:
+		gameIntroScreen->drawIntroScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont);
+		break;
+	case GAME_SCREEN_HELP:
+		gameHelpScreen->drawHelpScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont, (char*)"NEXT");
+		break;
+	case GAME_SCREEN_PLAY:
+		gameScreen->drawGameScreenAndHandleInput(buffer, this->headingFont, this->textFont);
 	}
 
 }

@@ -11,7 +11,7 @@ CreditsScreen::CreditsScreen(GameState* gameState) {
 	this->credits = (char*)"Questions for the quizes are obtained from the back exercises of the book Game Programming All in One by Jonathan S. Harbour.\n\n\nThe UI elements were derived from https://opengameart.org/content/fantasy-ui-elements-by-ravenmore \n\nBackground music was obtained from: http://www.partnersinrhyme.com/midi/index.shtml \n\nSound FX were obtained from: http://www.wavsource.com/sfx/sfx.htm";
 }
 
-void CreditsScreen::showCreditsScreen(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont ) {
+void CreditsScreen::drawCreditsScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont ) {
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
 

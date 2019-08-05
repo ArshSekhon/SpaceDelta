@@ -34,7 +34,7 @@ public:
 	 * 
 	 * @param buffer Screen buffer or other buffer where the Sound related settings screen has to be drawn.
 	 */
-	void showSoundSettingsMenu(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font);
+	void drawSoundSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font);
 private:
 	GameState* gameState;
 	ConfigManager* configManager;
