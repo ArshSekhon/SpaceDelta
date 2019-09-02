@@ -31,7 +31,7 @@ public:
 	int makeBulletImpact(int impactLevel);
 
 	int getShipType();
-
+	bool isOffScreen();
 	 
 
 private:

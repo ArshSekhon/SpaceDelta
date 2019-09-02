@@ -2,6 +2,12 @@
 #include "Constants.h"
 #include <allegro.h>
 
+//SOUND EFFECTS
+#define SOUND_CLICK 0
+#define SOUND_LASER_SHOOT 1
+#define SOUND_EXPLOSION 2
+#define SOUND_BOING 3
+
 /**
  * @brief Manages sound and music for the game. Also Provides methods to play different sound effects.
  * 
@@ -10,9 +16,9 @@ class SoundManager
 {
 private:
 	MIDI* bgMusic;
-	SAMPLE* cheeringSound;
+	SAMPLE* laserSound;
 	SAMPLE* clickSound;
-	SAMPLE* buzzerSound;
+	SAMPLE* explosion;
 	SAMPLE* boingSound;
 	GameState* gameState;
 

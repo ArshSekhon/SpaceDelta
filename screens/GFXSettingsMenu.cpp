@@ -132,6 +132,7 @@ int GFXSettingsMenu::drawGfxMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroun
 		if ((gameState->pendingMouseClick==1) && !(mouse_b & 1)) {
 			// change the gfx settings
 			this->changeGfxMode(buffer, this->gfxResolutionMode, this->gfxScreenMode, this->gameState);
+			gameState->needPlayerReset = 1;
 			gameState->mouseHover = 0;
 			gameState->pendingMouseClick = 0;
 			rest(300);

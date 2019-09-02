@@ -17,6 +17,7 @@ public:
 	Sprite* getSprite();
 	int getDamageVal();
 	void setDamageVal(int damageVal);
+	bool isOffScreen();
 
 
 private:

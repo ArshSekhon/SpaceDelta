@@ -5,8 +5,10 @@ SoundManager::SoundManager(GameState* gameState) {
 	//load music
 	this->bgMusic = load_midi("assets/sounds/music.mid");
 	// load sound samples
-	this->cheeringSound = load_wav("assets/sounds/cheering.wav");
-	this->buzzerSound = load_wav("assets/sounds/buzzer.wav");
+	//https://opengameart.org/content/laser-fire 
+	this->laserSound = load_wav("assets/sounds/laser1.wav");
+	//https://opengameart.org/content/big-explosion
+	this->explosion = load_wav("assets/sounds/explosion.wav");
 	this->clickSound = load_wav("assets/sounds/click.wav");
 	this->boingSound = load_wav("assets/sounds/boing.wav");
 }
@@ -40,11 +42,11 @@ void SoundManager::playSound(int sfxId, int freq) {
 	case SOUND_BOING:
 		//play_sample(boingSound, gameState->sound_volume * 25.5, 128, freq, 0);
 		break;
-	case SOUND_CHEERING:
-		//play_sample(cheeringSound, gameState->sound_volume * 25.5, 128, freq, 0);
+	case SOUND_LASER_SHOOT:
+		play_sample(laserSound, gameState->sound_volume * 25.5, 128, freq, 0);
 		break;
-	case SOUND_BUZZER:
-		//play_sample(buzzerSound, gameState->sound_volume * 25.5, 128, freq, 0);
+	case SOUND_EXPLOSION:
+		play_sample(explosion, gameState->sound_volume * 25.5, 128, freq, 0);
 		break;
 	}
 }

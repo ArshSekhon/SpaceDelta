@@ -83,3 +83,8 @@ void MineBomb::setDamageVal(int damageVal)
 {
 	this->damageVal = damageVal;
 }
+
+bool MineBomb::isOffScreen()
+{
+	return (this->bombSprite->getY() > SCREEN_H);
+}

@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "../Sprite.h"
 #include "../constants.h"
+#include "../SoundManager.h"
 
 
 class PlayerShip {
@@ -16,11 +17,15 @@ private:
 	int bulletShootDelay;
 	bool wasSpaceUp = false; 
 	bool dualBullets = false;
+	bool isActive = true;
+	SoundManager* soundManager;
 
 public:
-	PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay);
+	PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager);
 	~PlayerShip();
 	void showShipAndHandleControls(BITMAP* buffer);
 	Sprite* getSprite();
+	void kill();
+	bool isAlive();
 
 };

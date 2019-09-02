@@ -24,11 +24,6 @@
 #define GAME_SCREEN_RESULTS 9
 #define GAME_SCREEN_CREDITS 10
 
-//SOUND EFFECTS
-#define SOUND_CLICK 0
-#define SOUND_CHEERING 1
-#define SOUND_BUZZER 2
-#define SOUND_BOING 3
 
 // Error and Exception codes
 #define EXCEPTION_READING_QUESTION_FILE 101
@@ -78,10 +73,12 @@ struct GameState {
 	 
 
 	int health=100;
-	int currentScore=1234;
+	int currentScore=0;
 
 	int bgMusicPlaying;
 	int pendingMouseClick;
+
+	int needPlayerReset = 0;
 };
 
 /**

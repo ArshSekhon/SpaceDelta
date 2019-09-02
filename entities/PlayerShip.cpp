@@ -1,6 +1,7 @@
 #include "PlayerShip.h" 
 
-PlayerShip::PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay) {
+PlayerShip::PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager) {
+	this->soundManager = soundManager;
 	this->bullets = bullets;
 	this->bulletShootDelay = bulletShootDelay;
 	this->playerShipSize = SCREEN_W * .15625 / 1.5; 
@@ -23,6 +24,10 @@ PlayerShip::~PlayerShip() {
 
 
 void PlayerShip::showShipAndHandleControls(BITMAP* buffer) {
+	if (!isActive)
+		return;
+
+
 	this->shipSprite->draw(buffer); 
 	   
 	if (key[KEY_RIGHT] && (this->shipSprite->getX()+this->playerShipSize) < PLAY_REGION_W)
@@ -32,6 +37,7 @@ void PlayerShip::showShipAndHandleControls(BITMAP* buffer) {
 		this->shipSprite->move(SPRITE_MOVE_LEFT);
 	
  	if (key[KEY_SPACE] && this->wasSpaceUp && (clock()-lastBulletShootTime)> this->bulletShootDelay) {
+
 		this->lastBulletShootTime = clock();
 
 		if (dualBullets) {
@@ -43,6 +49,9 @@ void PlayerShip::showShipAndHandleControls(BITMAP* buffer) {
 		else {
 			this->bullets->push_back((Bullet*)new Bullet(15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3, this->shipSprite->getY()));
 		}
+
+
+		soundManager->playSound(SOUND_LASER_SHOOT, 1000);
 	}
 
 
@@ -51,6 +60,15 @@ void PlayerShip::showShipAndHandleControls(BITMAP* buffer) {
 
 }
 
+bool PlayerShip::isAlive() 
+{
+	return this->isActive;
+}
+
 Sprite* PlayerShip::getSprite() {
 	return this->shipSprite;
+}
+
+void PlayerShip::kill() {
+	this->isActive = false;
 }

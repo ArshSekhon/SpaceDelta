@@ -148,9 +148,22 @@ void EnemyShip::showHealthBar(BITMAP* buffer) {
 
 int EnemyShip::makeBulletImpact(int impact)
 {
-	this->health -= (10.0 - 1.0 * this->skillLevel) / 10.0 * impact;
+	
+	if(this->shipType == ENEMY_SHIP_BIG) 
+		this->health -= (10.0 - 1.0 * this->skillLevel) / 20.0 * impact;
+	else
+		this->health -= (10.0 - 1.0 * this->skillLevel) / 10.0 * impact;
+
+
+
 	if (this->health < 0)
 		this->health = 0;
 
 	return this->health;
+}
+
+bool EnemyShip::isOffScreen()
+{
+	return (this->shipSprite->getY() > SCREEN_H);
+
 }

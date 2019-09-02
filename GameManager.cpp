@@ -123,13 +123,13 @@ int GameManager::init() {
 	creditsScreen = new CreditsScreen(gameState); 
 	gameHelpScreen = new GameHelpScreen(gameState);
 	gameIntroScreen = new GameIntroScreen(gameState, &configManager);
-	gameScreen = new GameScreen(gameState);
+	gameScreen = new GameScreen(gameState, soundManager);
 
 
 	rest(1000);
 
 
-	gameState->gameScreen = GAME_SCREEN_PLAY;
+	gameState->gameScreen = GAME_SCREEN_MAIN_MENU;
 	gameState->pendingMouseClick = 0;
 	return 0;
 }
