@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\screens">
+      <UniqueIdentifier>{e1952fc0-01ad-430b-82b4-efa8224f20ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{a325a76c-a813-42ae-9a27-77cb558370c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\screens">
+      <UniqueIdentifier>{65a43bc1-65a6-4b80-b9b8-dbab781751f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\entities">
+      <UniqueIdentifier>{52a68611-daeb-4dd5-9a57-0edbf62f31df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SpaceDelta.cpp">
@@ -33,25 +45,43 @@
     <ClCompile Include="Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="screens\CreditsScreen.cpp">
+    <ClCompile Include="screens\GameScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="screens\SettingsMenu.cpp">
+    <ClCompile Include="Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="screens\GFXSettingsMenu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="screens\SettingsMenu.cpp">
+      <Filter>Source Files\screens</Filter>
     </ClCompile>
     <ClCompile Include="screens\SoundSettingsMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="screens\GameIntroScreen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\screens</Filter>
     </ClCompile>
     <ClCompile Include="screens\GameHelpScreen.cpp">
+      <Filter>Source Files\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="screens\GameIntroScreen.cpp">
+      <Filter>Source Files\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="screens\CreditsScreen.cpp">
+      <Filter>Source Files\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\PlayerShip.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\EnemyShip.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\Bullet.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="entities\Explosion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="screens\GameScreen.cpp">
+    <ClCompile Include="entities\MineBomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,6 +143,21 @@
     <Image Include="assets\ui-elem\help-banner.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\sprites\player-spritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sprites\player-spritesheet.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sprites\hub-red.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sprites\explosion.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sprites\mines.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -127,31 +172,49 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="screens\MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="screens\CreditsScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="screens\SettingsMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="screens\GFXSettingsMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="screens\SoundSettingsMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="screens\GameIntroScreen.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\screens</Filter>
     </ClInclude>
     <ClInclude Include="screens\GameHelpScreen.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\GameIntroScreen.h">
+      <Filter>Header Files\screens</Filter>
     </ClInclude>
     <ClInclude Include="screens\GameScreen.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\MainMenu.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\SettingsMenu.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\GFXSettingsMenu.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="screens\SoundSettingsMenu.h">
+      <Filter>Header Files\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\PlayerShip.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\Bullet.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\EnemyShip.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\Explosion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entities\MineBomb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

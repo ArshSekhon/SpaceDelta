@@ -1,22 +1,373 @@
-#include "GameScreen.h"
-
+#include "GameScreen.h" 
 
 
 GameScreen::GameScreen(GameState* gameState)
 {
 	this->gameState = gameState;
 	this->gameBackground = load_bitmap("assets/backgrounds/game-bg.bmp", NULL);
+	this->genericBackground = load_bitmap("assets/backgrounds/background-menus.bmp", NULL);
+	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+	this->playerShip = new PlayerShip(&this->bullets, 100);
 
+	this->explosions.push_back(new Explosion( BIG_EXPLOSION, 100, 100, 5));
+	this->mineBombs.push_back(new MineBomb(200,100,1));
+
+	 
+
+	this->bullets.push_back(new Bullet(15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 0, 0, 100, 100, true));
+
+	srand(time(NULL)); 
+	this->mineReleaseDelay = std::rand() % (5000);
 
 }
-
 
 GameScreen::~GameScreen()
 {
+	this->playerShip->~PlayerShip();
+	for (int i = 0; i < this->bullets.size(); i++)
+		this->bullets[i]->~Bullet();
+}
+  
+void GameScreen::displayHealthBarAndScore(BITMAP* buffer, FONT* customFont) {
+	
+	int labelsX = PLAY_REGION_W + SCREEN_W / 30;
+	int healthLabelY = 386 * SCALING_FACTOR_RELATIVE_TO_1280;
+	int healthBarY = healthLabelY + 50 * SCALING_FACTOR_RELATIVE_TO_1280;
+	int healthBarWidth = SCREEN_W / 5;
+	int healthBarHeight = 25 * SCALING_FACTOR_RELATIVE_TO_1280;
+
+
+	Utility::textout_magnified(buffer, customFont, labelsX, healthLabelY, 0.5*SCALING_FACTOR_RELATIVE_TO_1280, "HEALTH", makecol(11, 255, 255), -1);
+
+	rectfill(buffer, labelsX , healthBarY, labelsX + healthBarWidth, healthBarY + healthBarHeight, makecol(0, 0, 0));
+	if(this->gameState->health != 0)
+		rectfill(buffer, labelsX, healthBarY, labelsX + (healthBarWidth*((1.0*this->gameState->health)/100)), healthBarY + healthBarHeight, makecol(0, 255, 0)); 
+
+	Utility::textout_magnified(buffer, customFont, labelsX, 486 * SCALING_FACTOR_RELATIVE_TO_1280, 0.5 * SCALING_FACTOR_RELATIVE_TO_1280, "YOUR SCORE", makecol(11, 255, 255), -1);
+
+	Utility::textout_magnified(buffer, font, labelsX, 530 * SCALING_FACTOR_RELATIVE_TO_1280, 2 * SCALING_FACTOR_RELATIVE_TO_1280, std::to_string(this->gameState->currentScore).c_str(), makecol(255, 255, 255), -1);
 }
 
+void GameScreen::displayResultsBannerAndHandleInput(BITMAP* buffer, FONT* textFont)
+{
+ 	stretch_blit(genericBackground, buffer, 0, 0, genericBackground->w, genericBackground->h, 0, 0, SCREEN_W, SCREEN_H);
+
+	// draw graphics on screen for 640x480 mode
+	if (SCREEN_W == 640 && SCREEN_H == 480) {
+		masked_stretch_blit(bannerBitmap, buffer, 0, 0, bannerBitmap->w, bannerBitmap->h, SCREEN_W * 0.1, SCREEN_H * 0.1, SCREEN_W * 0.8, SCREEN_H * 0.8);
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.23, 0.5, "RESULTS", COLOR_TEXT, -1);
+
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.43, 0.55, "SCORE", makecol(255, 255, 255), -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.5, .7, std::to_string(this->gameState->currentScore).c_str(), makecol(255, 255, 255), -1);
+
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 3, SCREEN_H * 0.75, .4, "QUIT (Press ESC)", COLOR_TEXT, -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W * 2.0 / 3, SCREEN_H * 0.75, .4, "RESTART (Press R)", COLOR_TEXT, -1);
+
+
+	}
+	// draw graphics on screen for 960x720 mode
+	else if (SCREEN_W == 960 && SCREEN_H == 720) {
+		masked_stretch_blit(bannerBitmap, buffer, 0, 0, bannerBitmap->w, bannerBitmap->h, SCREEN_W * 0.1, SCREEN_H * 0.1, SCREEN_W * 0.8, SCREEN_H * 0.8);
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.23, 0.75, "RESULTS", COLOR_TEXT, -1);
+
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.43, 0.65, "SCORE", makecol(255, 255, 255), -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.5, .9, std::to_string(this->gameState->currentScore).c_str(), makecol(255, 255, 255), -1);
+
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 3, SCREEN_H * 0.75, .4, "QUIT (Press ESC)", COLOR_TEXT, -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W * 2.0 / 3, SCREEN_H * 0.75, .4, "RESTART (Press R)", COLOR_TEXT, -1);
+
+	
+
+	}
+	// draw graphics on screen for 1280x960 mode
+	else  if (SCREEN_W == 1280 && SCREEN_H == 960) {
+		masked_stretch_blit(bannerBitmap, buffer, 0, 0, bannerBitmap->w, bannerBitmap->h, (SCREEN_W - bannerBitmap->w) / 2, (SCREEN_H - bannerBitmap->h) / 2, bannerBitmap->w, bannerBitmap->h);
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.23, 1, "RESULTS", COLOR_TEXT, -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.43, 0.75, "SCORE", makecol(255,255,255), -1); 
+		 
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 2, SCREEN_H * 0.5, 1, std::to_string(this->gameState->currentScore).c_str(), makecol(255, 255, 255), -1);
+		 
+
+
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W / 3, SCREEN_H * 0.75, .5, "QUIT (Press ESC)", COLOR_TEXT, -1);
+		Utility::textout_centre_scaled(buffer, textFont, SCREEN_W * 2.0 / 3, SCREEN_H * 0.75, .5, "RESTART (Press R)", COLOR_TEXT, -1);
+
+
+	}
+
+	if (key[KEY_R]) {
+		//TODO: Implement game restart function
+		allegro_message("Game Restarded!");
+	}
+
+	
+}
 
 void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont, FONT* textFont) {
-	stretch_blit(gameBackground, buffer, 0, 0, gameBackground->w, gameBackground->h, 0, 0, SCREEN_W, SCREEN_H);
+	if (this->startTime == 0) {
+		startTime = clock();
+	}
+	else {
+		timeElasped = clock() - startTime;
+	}
+	triggerReleases();
 
+	if (this->gameState->health>0) {
+
+		stretch_blit(gameBackground, buffer, 0, 0, gameBackground->w, gameBackground->h, 0, 0, SCREEN_W, SCREEN_H);
+
+
+		this->displayHealthBarAndScore(buffer, headingFont);
+
+		this->checkHits(buffer);
+
+
+		for (int i = 0; i < this->enemyShips.size(); i++) {
+
+			this->enemyShips[i]->render(buffer);
+		}
+
+		for (int i = 0; i < this->bullets.size(); i++) {
+			this->bullets[i]->renderBullet(buffer);
+			if (this->bullets[i]->isOffScreen() || this->bullets[i]->hasExploded())
+			{
+				this->bullets[i]->~Bullet();
+				this->bullets.erase(this->bullets.begin() + i);
+			}
+		} 
+
+		this->playerShip->showShipAndHandleControls(buffer);
+
+		for (int i = 0; i < this->explosions.size(); i++) {
+
+			if (this->explosions[i]->hasEnded()) {
+				this->explosions[i]->~Explosion();
+				this->explosions.erase(this->explosions.begin() + i);
+			}
+			else {
+				this->explosions[i]->renderExplosion(buffer);
+			}
+		} 
+
+		for (int i = 0; i < this->mineBombs.size(); i++) {
+
+			if (this->mineBombs[i]->hasExploded()) {
+				this->mineBombs[i]->~MineBomb();
+				this->mineBombs.erase(this->mineBombs.begin() + i);
+			}
+			else {
+				this->mineBombs[i]->render(buffer);
+			}
+		}
+		  
+
+		textprintf_ex(buffer, font, PLAY_REGION_W + SCREEN_W / 25, 10, makecol(255, 255, 255), -1, "Bullets: %d Explosions: %d", this->bullets.size(), this->explosions.size());
+
+	}
+	else
+	{
+		this->displayResultsBannerAndHandleInput(buffer, headingFont);
+	}
+	 
+
+	 
+}
+
+void GameScreen::checkHits(BITMAP* buffer)
+{
+	Sprite* mainSprite;
+	Sprite* otherSprite;
+
+	// check bullet hits
+	for (int i = 0; i < this->bullets.size(); i++)
+	{
+		mainSprite = this->bullets[i]->getSprite();
+
+		//check bullets by enemies
+		if (this->bullets[i]->isEnemyBullet)
+		{
+			//check if hit player
+			otherSprite = this->playerShip->getSprite();
+
+			if (mainSprite->collided(buffer, mainSprite->getW()/6, mainSprite->getH()/5, otherSprite, otherSprite->getW()/100, otherSprite->getH()/4)) {
+				
+				if (this->gameState->health - this->bullets[i]->getDamageVal() > 0)
+					this->gameState->health -= this->bullets[i]->getDamageVal();
+				else
+					this->gameState->health = 0;
+
+				//add explosion
+				this->explosions.push_back(new Explosion(SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
+
+				//remove bullet
+				this->bullets[i]->~Bullet();
+				this->bullets.erase(this->bullets.begin() + i); 
+
+			}
+		}
+		//check bullets by playership
+		else
+		{
+			//check all mine bombs
+			for (int j = 0; j < this->mineBombs.size(); j++)
+			{
+				otherSprite = this->mineBombs[j]->getSprite();
+				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) {
+					this->gameState->currentScore++;
+
+					//add explosion
+					this->explosions.push_back(new Explosion(MEDIUM_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+
+					//remove minebomb
+					this->mineBombs[j]->~MineBomb();
+					this->mineBombs.erase(this->mineBombs.begin() + j); 
+					
+					//remove bullet
+					this->bullets[i]->~Bullet();
+					this->bullets.erase(this->bullets.begin() + i);
+				}
+
+			}
+
+			//check all bullets
+			for (int j = 0; j < this->bullets.size(); j++)
+			{
+				if (this->bullets[j]->isEnemyBullet) {
+					otherSprite = this->bullets[j]->getSprite();
+					if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) {
+						this->gameState->currentScore++;
+						//add explosion
+						this->explosions.push_back(new Explosion(SMALL_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+
+
+						//remove bullet
+						this->bullets[j]->~Bullet();
+						this->bullets.erase(this->bullets.begin() + j);
+
+						if (j < i)
+							i--;
+
+						//remove bullet
+						this->bullets[i]->~Bullet();
+						this->bullets.erase(this->bullets.begin() + i);
+					}
+				}
+			} 
+
+			//check all enemies for hit
+			for (int j = 0; j < this->enemyShips.size(); j++) {
+				otherSprite = this->enemyShips[j]->getSprite();
+				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 5, otherSprite->getH() / 5)) {
+					//collision has happened
+					if (this->enemyShips[j]->makeBulletImpact(this->bullets[i]->getDamageVal()) == 0) 
+					{ 
+						//add explosion
+						this->explosions.push_back(new Explosion(BIG_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+
+						this->enemyShips[j]->~EnemyShip();
+						this->enemyShips.erase(this->enemyShips.begin() + j);
+					}
+					else {
+
+						//add explosion
+						this->explosions.push_back(new Explosion(SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY(), 5));
+
+					}
+
+
+					//remove bullet
+					this->bullets[i]->~Bullet();
+					this->bullets.erase(this->bullets.begin() + i);
+				}
+
+			} 
+		}
+	}
+	//check for hits by minebombs
+	for (int i = 0; i < this->mineBombs.size(); i++) {
+
+
+		mainSprite = this->mineBombs[i]->getSprite();
+
+		//check if hit player
+		otherSprite = this->playerShip->getSprite();
+
+		if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 100, otherSprite->getH() / 4)) { 
+
+			if (this->gameState->health - this->mineBombs[i]->getDamageVal() > 0)
+				this->gameState->health -= this->mineBombs[i]->getDamageVal();
+			else
+				this->gameState->health = 0;
+
+			//add explosion
+			this->explosions.push_back(new Explosion(MEDIUM_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
+
+			//remove bullet
+			this->mineBombs[i]->~MineBomb();
+			this->mineBombs.erase(this->mineBombs.begin() + i); 
+
+		}
+
+	}  
+
+	//check for hits by enemy ships
+	for (int i = 0; i < this->enemyShips.size(); i++) { 
+
+		mainSprite = this->enemyShips[i]->getSprite();
+
+		//check if hit player
+		otherSprite = this->playerShip->getSprite();
+
+		if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 100, otherSprite->getH()/4)) {
+			
+			int explosionType = (this->enemyShips[i]->getShipType() == ENEMY_SHIP_SMALL) ? MEDIUM_EXPLOSION : BIG_EXPLOSION;
+
+			this->explosions.push_back(new Explosion(explosionType, mainSprite->getCenterX(), mainSprite->getCenterY(), 5));
+
+			if (this->gameState->health - this->enemyShips[i]->getCollisionDamage() > 0)
+				this->gameState->health -= this->enemyShips[i]->getCollisionDamage();
+			else
+				this->gameState->health = 0;
+
+
+
+			//remove ship
+			this->enemyShips[i]->~EnemyShip();
+			this->enemyShips.erase(this->enemyShips.begin() + i);
+		}
+
+	}
+
+
+}
+
+void GameScreen::triggerReleases()
+{	 
+
+	//release mines
+	if (clock() - lastmineReleaseTime > mineReleaseDelay) {
+		this->mineBombs.push_back(new MineBomb((std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
+		this->mineReleaseDelay = std::rand() % (3000) + 2000;
+		lastmineReleaseTime = clock();
+	}
+
+
+	//release enemy
+	if (clock() - lastEnemyReleaseTime > enemyReleaseDelay) {
+
+		int shipType = (std::rand() % (5)<3) ? ENEMY_SHIP_SMALL : ENEMY_SHIP_BIG;
+		this->enemyShips.push_back(new EnemyShip(shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), 55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
+		this->enemyReleaseDelay = std::rand() % (5000) + 2000;
+
+		lastEnemyReleaseTime = clock(); 
+	}
+
+	
 }

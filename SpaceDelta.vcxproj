@@ -154,8 +154,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="entities\EnemyShip.cpp" />
+    <ClCompile Include="entities\Bullet.cpp" />
     <ClCompile Include="ConfigManager.cpp" />
+    <ClCompile Include="entities\PlayerShip.cpp" />
+    <ClCompile Include="entities\Explosion.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="entities\MineBomb.cpp" />
     <ClCompile Include="screens\GameScreen.cpp" />
     <ClCompile Include="screens\CreditsScreen.cpp" />
     <ClCompile Include="screens\GameHelpScreen.cpp" />
@@ -166,6 +171,7 @@
     <ClCompile Include="screens\SoundSettingsMenu.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SpaceDelta.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +182,14 @@
     <Image Include="assets\sprites\BlueSmallShip.png" />
     <Image Include="assets\sprites\bullet.png" />
     <Image Include="assets\sprites\bullet_red.png" />
+    <Image Include="assets\sprites\explosion.bmp" />
+    <Image Include="assets\sprites\hub-red.bmp" />
     <Image Include="assets\sprites\hub-red.png" />
+    <Image Include="assets\sprites\mines.bmp" />
     <Image Include="assets\sprites\mines.png" />
     <Image Include="assets\sprites\mothership_try.png" />
+    <Image Include="assets\sprites\player-spritesheet.bmp" />
+    <Image Include="assets\sprites\player-spritesheet.png" />
     <Image Include="assets\sprites\red-smallship.png" />
     <Image Include="assets\sprites\redbig.png" />
     <Image Include="assets\ui-elem\banner.bmp" />
@@ -190,9 +201,14 @@
     <Image Include="assets\ui-elem\pointer.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="entities\EnemyShip.h" />
+    <ClInclude Include="entities\Bullet.h" />
     <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="constants.h" />
+    <ClInclude Include="entities\PlayerShip.h" />
+    <ClInclude Include="entities\Explosion.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="entities\MineBomb.h" />
     <ClInclude Include="screens\GameScreen.h" />
     <ClInclude Include="screens\CreditsScreen.h" />
     <ClInclude Include="screens\GameHelpScreen.h" />
@@ -202,6 +218,7 @@
     <ClInclude Include="screens\SettingsMenu.h" />
     <ClInclude Include="screens\SoundSettingsMenu.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>

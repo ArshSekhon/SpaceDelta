@@ -45,6 +45,12 @@
 #define COLOR_TEXT makecol(11,255,255)
 #define COLOR_HUD_TEXT makecol(96,57,28)
 
+#define PLAY_REGION_W SCREEN_W*0.655
+
+#define SCALING_FACTOR_RELATIVE_TO_1280 (SCREEN_W*1.0)/1280
+#define SCALING_FACTOR_RELATIVE_TO_960 (SCREEN_W*1.0)/960
+#define SCALING_FACTOR_RELATIVE_TO_640 (SCREEN_W*1.0)/640
+
 /**
  * @brief Struct used to store the state of the game.
  *
@@ -71,8 +77,8 @@ struct GameState {
 	int skip_intro;
 	 
 
-	int health;
-	int currentScore;
+	int health=100;
+	int currentScore=1234;
 
 	int bgMusicPlaying;
 	int pendingMouseClick;

@@ -38,7 +38,7 @@ int GameManager::init() {
 		return ERROR_ALLEGRO_INIT;
 	}
 
-	set_window_title("Game Development Trivia");
+	set_window_title("Space Delta: Guardians of the Galaxy");
 
 	// set handler to make the close button work
 	LOCK_FUNCTION(close_button_handler);
@@ -129,15 +129,25 @@ int GameManager::init() {
 	rest(1000);
 
 
-	gameState->gameScreen = GAME_SCREEN_MAIN_MENU;
+	gameState->gameScreen = GAME_SCREEN_PLAY;
 	gameState->pendingMouseClick = 0;
 	return 0;
 }
 //game look
 void GameManager::runGameLoop() {
 	BITMAP* buffer = NULL;
+	unsigned long start_time = 0, rest_time = 0, curr_time = 0;
+	long frame_time = 0;
+	unsigned int framesRendered = 0, game_fps = 0;
+
 
 	while (!key[KEY_ESC] && !close_button_flag && !gameState->exitGame) {
+		curr_time = clock();
+		if (curr_time - start_time > 1000) {
+			start_time = curr_time;
+			game_fps = framesRendered;
+			framesRendered = 0;
+		}
 
 		if (gameState->mouseHover == 1 && (mouse_b & 1) && gameState->pendingMouseClick == 0) {
 			soundManager->playSound(SOUND_CLICK, 1000);
@@ -180,13 +190,18 @@ void GameManager::runGameLoop() {
 			set_mouse_sprite(cursor);
 			pointerAsCursor = 0;
 		}
+		 
+		textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Mouse position is %d, %d! FPS: %d", mouse_x, mouse_y, game_fps);
 
-
+		
 		//draw buffer to screen and clear buffer
 		blit(buffer, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 		clear_bitmap(buffer);
+		frame_time = clock() - curr_time;
+		rest_time = ((15 - frame_time) > 0) ? 15 - frame_time : 1;
+		rest(rest_time);
 
-		rest(30);
+		framesRendered++;
 	};
 
 }

@@ -1,7 +1,6 @@
 #pragma once
+#include "screens/GameScreen.h"
 #include "Constants.h" 
-#include "SoundManager.h"
-
 #include "screens/MainMenu.h"
 #include "screens/CreditsScreen.h"
 #include "screens/SettingsMenu.h"
@@ -9,7 +8,8 @@
 #include "screens/SoundSettingsMenu.h"
 #include "screens/GameIntroScreen.h"
 #include "screens/GameHelpScreen.h"
-#include "screens/GameScreen.h"
+#include "SoundManager.h"
+
 
 #include "Constants.h"
 #include "ConfigManager.h" 
