@@ -79,6 +79,7 @@ struct GameState {
 	int pendingMouseClick;
 
 	int needPlayerReset = 0;
+	int gamePaused = 0;
 };
 
 /**

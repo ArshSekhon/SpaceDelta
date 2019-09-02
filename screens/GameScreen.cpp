@@ -12,6 +12,8 @@ GameScreen::GameScreen(GameState* gameState, SoundManager* soundManager)
 	this->playerShip = new PlayerShip(&this->bullets, 100, this->soundManager); 
 	this->mineBombs.push_back(new MineBomb(200,100,1));
 
+	this->mineBombs.push_back(new MineBomb((std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
+
 	  
 	srand(time(NULL)); 
 	this->mineReleaseDelay = std::rand() % (5000);
@@ -222,7 +224,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 		}
 		  
 
-		textprintf_ex(buffer, font, PLAY_REGION_W + SCREEN_W / 25, 10, makecol(255, 255, 255), -1, "Bullets: %d Explosions: %d Enemies: %d Mines: %d", this->bullets.size(), this->explosions.size(), this->enemyShips.size(), this->mineBombs.size());
+		//textprintf_ex(buffer, font, PLAY_REGION_W + SCREEN_W / 25, 10, makecol(255, 255, 255), -1, "Bullets: %d Explosions: %d Enemies: %d Mines: %d", this->bullets.size(), this->explosions.size(), this->enemyShips.size(), this->mineBombs.size());
 
 	}
 	else
@@ -243,6 +245,11 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 		gameOverTime = clock();
 	}
 
+	 
+
+	if ((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_H]) {
+		gameState->gameScreen = GAME_SCREEN_HELP;
+	} 
 	 
 }
 
@@ -482,7 +489,7 @@ void GameScreen::triggerReleases()
 	if (clock() - lastEnemyReleaseTime > enemyReleaseDelay) {
 
 		int shipType = (std::rand() % (5)<2) ? ENEMY_SHIP_SMALL : ENEMY_SHIP_BIG;
-		this->enemyShips.push_back(new EnemyShip(shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), 55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
+		this->enemyShips.push_back(new EnemyShip(shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
 		this->enemyReleaseDelay = std::rand() % (5000) + 2000;
 
 		lastEnemyReleaseTime = clock(); 

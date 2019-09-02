@@ -11,7 +11,7 @@ Sprite::Sprite(
 
 		this->bmp = src;
 
-		this->spritesheetSpriteW = this->bmp->w/ssheetNumCols;
+ 		this->spritesheetSpriteW = this->bmp->w/ssheetNumCols;
 		this->spritesheetSpriteH = this->bmp->h / ssheetNumRows;
 
 		this->spritesheetRows = ssheetNumRows;

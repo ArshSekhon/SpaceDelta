@@ -46,6 +46,7 @@ private:
 	int pointerAsCursor;
 	int muteActionTriggered;
 	int musicPlaying = 1;
+	int soundVol = 0;
 
 	void showLoadingScreen();
 	void renderFrameToBuffer(BITMAP* buffer);

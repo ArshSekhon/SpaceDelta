@@ -164,10 +164,13 @@ void GameManager::runGameLoop() {
 				if (musicPlaying) {
 					musicPlaying = 0;
 					soundManager->stopBgMusic();
+					this->soundVol = gameState->sound_volume;
+					gameState->sound_volume = 0;
 				}
 				else {
 					musicPlaying = 1;
 					soundManager->playBgMusic(1);
+					gameState->sound_volume = this->soundVol;
 				}
 		}
 
@@ -191,7 +194,7 @@ void GameManager::runGameLoop() {
 			pointerAsCursor = 0;
 		}
 		 
-		textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Mouse position is %d, %d! FPS: %d", mouse_x, mouse_y, game_fps);
+		//textprintf_ex(buffer, font, 10, 10, makecol(255, 255, 255), -1, "Mouse position is %d, %d! FPS: %d", mouse_x, mouse_y, game_fps);
 
 		
 		//draw buffer to screen and clear buffer
@@ -277,7 +280,7 @@ void GameManager::renderFrameToBuffer(BITMAP* buffer) {
 		gameIntroScreen->drawIntroScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont);
 		break;
 	case GAME_SCREEN_HELP:
-		gameHelpScreen->drawHelpScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont, (char*)"NEXT");
+		gameHelpScreen->drawHelpScreenAndHandleInput(buffer, this->menuBackground, this->headingFont, this->textFont, (char*)"CONTINUE");
 		break;
 	case GAME_SCREEN_PLAY:
 		gameScreen->drawGameScreenAndHandleInput(buffer, this->headingFont, this->textFont);
