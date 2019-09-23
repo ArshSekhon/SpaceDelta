@@ -2,6 +2,7 @@
 
 GameHelpScreen::GameHelpScreen(GameState* gameState) {
 	this->gameState = gameState; 
+	// load bitmap
 	this->bannerBitmap = load_bitmap("assets/ui-elem/help-banner.bmp", NULL);
 	 
 
@@ -36,7 +37,7 @@ void GameHelpScreen::drawHelpScreenAndHandleInput(BITMAP* buffer, BITMAP* backgr
 
 	this->closeButtonColor = OPTION_COLOR;
 	this->neverShowAgainButtonColor = OPTION_COLOR;
-	
+	// handle mouse clicks
 	if (Utility::mouseInTheBoundingBox(closeButton)) {
 		gameState->mouseHover = 1;
 		this->closeButtonColor = OPTION_COLOR_HOVERED;

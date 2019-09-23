@@ -5,8 +5,7 @@
 //SOUND EFFECTS
 #define SOUND_CLICK 0
 #define SOUND_LASER_SHOOT 1
-#define SOUND_EXPLOSION 2
-#define SOUND_BOING 3
+#define SOUND_EXPLOSION 2 
 
 /**
  * @brief Manages sound and music for the game. Also Provides methods to play different sound effects.
@@ -18,8 +17,7 @@ private:
 	MIDI* bgMusic;
 	SAMPLE* laserSound;
 	SAMPLE* clickSound;
-	SAMPLE* explosion;
-	SAMPLE* boingSound;
+	SAMPLE* explosion; 
 	GameState* gameState;
 
 public:

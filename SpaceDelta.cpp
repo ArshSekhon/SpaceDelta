@@ -1,18 +1,11 @@
-#include <string>
-#include <vector>
 #include "constants.h"
 #include "GameManager.h"
-#include <allegro.h>
-volatile int hit_closed = 0;
+#include <allegro.h> 
 
-void close_button_proc()
-{
-	hit_closed = 1;
-}
+ 
 
 int main(void ) {
-	 
-	std::vector<std::string> g1;
+	  
 
 	GameState gs;
 	//default settings if config does not exist
@@ -22,7 +15,7 @@ int main(void ) {
 	gs.sound_volume = 10;
 	gs.music_volume = 10;
 	gs.exitGame = 0;
-
+	// create a new game manager
 	GameManager gameManager(&gs);
 
 	gameManager.init(); 

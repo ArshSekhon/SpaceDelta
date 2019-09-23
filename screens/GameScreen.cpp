@@ -3,15 +3,16 @@
 
 GameScreen::GameScreen(GameState* gameState, SoundManager* soundManager)
 {
+	// initializations
 	this->gameState = gameState;
 	this->soundManager = soundManager; 
-
+	// load bitmaps
 	this->gameBackground = load_bitmap("assets/backgrounds/game-bg.bmp", NULL);
 	this->genericBackground = load_bitmap("assets/backgrounds/background-menus.bmp", NULL);
 	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+	// create new playerships and minebombs
 	this->playerShip = new PlayerShip(&this->bullets, 100, this->soundManager); 
-	this->mineBombs.push_back(new MineBomb(200,100,1));
-
+	this->mineBombs.push_back(new MineBomb(200,100,1)); 
 	this->mineBombs.push_back(new MineBomb((std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
 
 	  
@@ -21,30 +22,37 @@ GameScreen::GameScreen(GameState* gameState, SoundManager* soundManager)
 }
 
 GameScreen::~GameScreen()
-{
+{	
+	// do the cleanup
 	this->playerShip->~PlayerShip();
 	for (int i = 0; i < this->bullets.size(); i++)
 		this->bullets[i]->~Bullet();
+	for (int i = 0; i < this->mineBombs.size(); i++)
+		this->mineBombs[i]->~MineBomb();
+	for (int i = 0; i < this->enemyShips.size(); i++)
+		this->enemyShips[i]->~EnemyShip();
+	for (int i = 0; i < this->explosions.size(); i++)
+		this->explosions[i]->~Explosion();
 }
   
 void GameScreen::displayHealthBarAndScore(BITMAP* buffer, FONT* customFont) {
 
-	
+	// calculate the position and dimensions
 	int labelsX = PLAY_REGION_W + SCREEN_W / 30;
 	int healthLabelY = 386 * SCALING_FACTOR_RELATIVE_TO_1280;
 	int healthBarY = healthLabelY + 50 * SCALING_FACTOR_RELATIVE_TO_1280;
 	int healthBarWidth = SCREEN_W / 5;
 	int healthBarHeight = 25 * SCALING_FACTOR_RELATIVE_TO_1280;
 
-
+	// display label text
 	Utility::textout_magnified(buffer, customFont, labelsX, healthLabelY, 0.5*SCALING_FACTOR_RELATIVE_TO_1280, "HEALTH", makecol(11, 255, 255), -1);
-
+	// create empty health bar
 	rectfill(buffer, labelsX , healthBarY, labelsX + healthBarWidth, healthBarY + healthBarHeight, makecol(0, 0, 0));
+	// if health !==0 fill the health bar up as required
 	if(this->gameState->health != 0)
 		rectfill(buffer, labelsX, healthBarY, labelsX + (healthBarWidth*((1.0*this->gameState->health)/100)), healthBarY + healthBarHeight, makecol(0, 255, 0)); 
-
+	// display score related information
 	Utility::textout_magnified(buffer, customFont, labelsX, 486 * SCALING_FACTOR_RELATIVE_TO_1280, 0.5 * SCALING_FACTOR_RELATIVE_TO_1280, "YOUR SCORE", makecol(11, 255, 255), -1);
-
 	Utility::textout_magnified(buffer, font, labelsX, 530 * SCALING_FACTOR_RELATIVE_TO_1280, 2 * SCALING_FACTOR_RELATIVE_TO_1280, std::to_string(this->gameState->currentScore).c_str(), makecol(255, 255, 255), -1);
 
 
@@ -141,7 +149,7 @@ void GameScreen::displayResultsBannerAndHandleInput(BITMAP* buffer, FONT* textFo
 
 
 
-
+	// restart game if KEY R is pressed
 	if (key[KEY_R]) {
 		gameState->needPlayerReset = 1;
 	}
@@ -156,10 +164,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 	else {
 		timeElasped = clock() - startTime;
 	}
-	triggerReleases();
-
-
-
+	// if game needs a reset, reset all vars and game state to initial value
 	if (gameState->needPlayerReset == 1) {
 		gameState->needPlayerReset = 0;
 		this->playerShip->~PlayerShip();
@@ -173,23 +178,32 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 		this->gameState->currentScore = 0;
 		this->gameOverTime = -1;
 	}
+	// if game is over then display the results banner
+	if (this->gameState->health <= 0 && clock() - gameOverTime > gameOverDelay)
+	{
 
+		this->displayResultsBannerAndHandleInput(buffer, headingFont);
+		return;
+	}
+	// if game is not over yet
+	else{
 
-	if (this->gameState->health>0 || clock()-gameOverTime<gameOverDelay) {
-
+		// check if it is the time to do new release of any of the enemy entities
+		triggerReleases();
+		// render the background
 		stretch_blit(gameBackground, buffer, 0, 0, gameBackground->w, gameBackground->h, 0, 0, SCREEN_W, SCREEN_H);
 
-
+		// display health bar
 		this->displayHealthBarAndScore(buffer, headingFont);
-
+		// check for collisions
 		this->checkHits(buffer);
 
-
+		// render the enemy ships
 		for (int i = 0; i < this->enemyShips.size(); i++) {
 
 			this->enemyShips[i]->render(buffer);
 		}
-
+		// render bullets
 		for (int i = 0; i < this->bullets.size(); i++) {
 			this->bullets[i]->renderBullet(buffer);
 			if (this->bullets[i]->isOffScreen() || this->bullets[i]->hasExploded())
@@ -198,9 +212,9 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 				this->bullets.erase(this->bullets.begin() + i);
 			}
 		} 
-
+		// render player ship and handle controls for it
 		this->playerShip->showShipAndHandleControls(buffer);
-
+		// render the explosions
 		for (int i = 0; i < this->explosions.size(); i++) {
 
 			if (this->explosions[i]->hasEnded()) {
@@ -211,7 +225,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 				this->explosions[i]->renderExplosion(buffer);
 			}
 		} 
-
+		// render the minebombs
 		for (int i = 0; i < this->mineBombs.size(); i++) {
 
 			if (this->mineBombs[i]->hasExploded()) {
@@ -227,12 +241,8 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 		//textprintf_ex(buffer, font, PLAY_REGION_W + SCREEN_W / 25, 10, makecol(255, 255, 255), -1, "Bullets: %d Explosions: %d Enemies: %d Mines: %d", this->bullets.size(), this->explosions.size(), this->enemyShips.size(), this->mineBombs.size());
 
 	}
-	else
-	{
-
-		this->displayResultsBannerAndHandleInput(buffer, headingFont);
-	}
-	 
+	
+	 // if player health is 0 render an explosion and end the game
 	if (this->gameState->health <= 0 && gameOverTime==-1) {
 
 		//add explosion
@@ -246,7 +256,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 	}
 
 	 
-
+	// if player presses Ctrl+H render the help menu
 	if ((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_H]) {
 		gameState->gameScreen = GAME_SCREEN_HELP;
 	} 
@@ -270,7 +280,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			otherSprite = this->playerShip->getSprite();
 
 			if (this->playerShip->isAlive() && mainSprite->collided(buffer, mainSprite->getW()/6, mainSprite->getH()/5, otherSprite, otherSprite->getW()/100, otherSprite->getH()/4)) {
-				
+				// update health for player
 				if (this->gameState->health - this->bullets[i]->getDamageVal() > 0)
 					this->gameState->health -= this->bullets[i]->getDamageVal();
 				else
@@ -279,7 +289,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 				//add explosion
 				this->explosions.push_back(new Explosion(SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
 
-
+				// play sound effect
 				this->soundManager->playSound(SOUND_EXPLOSION, 2000);
 
 
@@ -298,8 +308,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			for (int j = 0; j < this->mineBombs.size(); j++)
 			{
 				otherSprite = this->mineBombs[j]->getSprite();
-				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) {
-					this->gameState->currentScore++;
+				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) { 
 
 					//add explosion
 					this->explosions.push_back(new Explosion(MEDIUM_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
@@ -325,8 +334,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			{
 				if (this->bullets[j]->isEnemyBullet) {
 					otherSprite = this->bullets[j]->getSprite();
-					if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) {
-						this->gameState->currentScore++;
+					if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) { 
 						//add explosion
 						this->explosions.push_back(new Explosion(SMALL_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
 

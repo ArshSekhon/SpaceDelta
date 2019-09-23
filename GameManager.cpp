@@ -14,6 +14,7 @@ END_OF_FUNCTION(close_button_handler)
 
 
 GameManager::GameManager(GameState* gs) {
+	// initialize vars
 	gameState = gs;
 	gs->gameScreen = GAME_SCREEN_LOADING;
 	gs->gfxSettingsUpdated = 1;
@@ -114,7 +115,7 @@ int GameManager::init() {
 	this->textFont = load_font("assets/font-tnr-16.pcx", NULL, NULL);
 
 
-
+	// create new objects for screens and menus
 	mainMenu = new MainMenu(gameState);
 	settingsMenu = new SettingsMenu(gameState);
 	gfxSettingsMenu = new GFXSettingsMenu(gameState, &configManager);
@@ -128,7 +129,7 @@ int GameManager::init() {
 
 	rest(1000);
 
-
+	// after load proceed to the main menu
 	gameState->gameScreen = GAME_SCREEN_MAIN_MENU;
 	gameState->pendingMouseClick = 0;
 	return 0;
@@ -140,23 +141,23 @@ void GameManager::runGameLoop() {
 	long frame_time = 0;
 	unsigned int framesRendered = 0, game_fps = 0;
 
-
+	// run game loop till game is exited or the ESC key is pressed
 	while (!key[KEY_ESC] && !close_button_flag && !gameState->exitGame) {
+		 
 		curr_time = clock();
 		if (curr_time - start_time > 1000) {
 			start_time = curr_time;
 			game_fps = framesRendered;
 			framesRendered = 0;
 		}
-
+		// play sound if mouse is clicked
 		if (gameState->mouseHover == 1 && (mouse_b & 1) && gameState->pendingMouseClick == 0) {
 			soundManager->playSound(SOUND_CLICK, 1000);
 		}
-
 		if ((mouse_b & 1) && gameState->mouseHover == 1) {
 			gameState->pendingMouseClick = 1;
 		}
-
+		// mute the audio if Ctrl+M is pressed
 		if ((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_M]) {
 			muteActionTriggered = 1;
 		} else if (!((key[KEY_LCONTROL] || key[KEY_RCONTROL]) && key[KEY_M]) && muteActionTriggered==1) {
@@ -182,7 +183,7 @@ void GameManager::runGameLoop() {
 			buffer = create_bitmap(gameState->resolution_x, gameState->resolution_y);
 			show_mouse(screen);
 		}
-		 
+		// render frame and handle input 
 		renderFrameToBuffer(buffer);
 
 		if (gameState->mouseHover == 1 && pointerAsCursor == 0) {
@@ -210,7 +211,7 @@ void GameManager::runGameLoop() {
 }
 
 void GameManager::exit() {
-
+	// do the cleanup
 	if (loadingBanner != NULL)
 		destroy_bitmap(loadingBanner);
 

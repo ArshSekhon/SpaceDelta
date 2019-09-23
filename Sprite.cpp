@@ -8,7 +8,7 @@ Sprite::Sprite(
 	int numOfFrames, int fps,
 	double velX, double velY, int xDelay, int yDelay,
 	int xPos, int yPos, bool loop) {
-
+		// intialize vars
 		this->bmp = src;
 
  		this->spritesheetSpriteW = this->bmp->w/ssheetNumCols;
@@ -44,6 +44,7 @@ void Sprite::draw(BITMAP* dest) {
 }
 
 void Sprite::updateAnimation() {
+	// update animation according to fps
 	if (clock()- lastFrameSwitchTime > 1000/this->fps) {
 		lastFrameSwitchTime = clock();
 		currentFrame++;

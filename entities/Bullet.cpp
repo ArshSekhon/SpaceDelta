@@ -1,7 +1,9 @@
 #include "Bullet.h"
-
+// constructor
 Bullet::Bullet(int w, int h, double speedY, int delayY, int posX, int posY, bool isEnemyBullet, int damageVal) {
+	//set the exploded to false initially
 	this->exploded = false;
+	// create sprites for the bullets
 	if(!isEnemyBullet)
 		this->bulletSprite = new Sprite(load_bitmap("assets/sprites/bullet.bmp",NULL), 
 									w, h, 
@@ -18,18 +20,19 @@ Bullet::Bullet(int w, int h, double speedY, int delayY, int posX, int posY, bool
 			0, speedY,
 			0, delayY,
 			posX, posY);
-
+	// initializes the variables.
 	this->isEnemyBullet = isEnemyBullet;
 	this->damageVal = damageVal;
 
 }
-
+// destructors
 Bullet::~Bullet() {
 	this->bulletSprite->~Sprite();
 }
-
+// render the bullet on to the screen and update its position
 void Bullet::renderBullet(BITMAP* buffer) {
 	this->bulletSprite->draw(buffer);
+	//update the position
 	if(isEnemyBullet) 
 		this->bulletSprite->move(SPRITE_MOVE_DOWN);
 	else

@@ -19,9 +19,9 @@
 class GameManager
 {
 private:
-
+	// pointer to sound manager object
 	SoundManager* soundManager;
-
+	// pointers to objects for different screens and menus
 	MainMenu* mainMenu;
 	CreditsScreen* creditsScreen;
 	SettingsMenu* settingsMenu;
@@ -31,7 +31,7 @@ private:
 	GameHelpScreen* gameHelpScreen;
 	GameScreen* gameScreen;
 	
-
+	
 	BITMAP* cursor;
 	BITMAP* cursorHand;
 	GameState* gameState; 

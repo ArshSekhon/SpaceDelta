@@ -3,7 +3,7 @@
 
 Explosion::Explosion( int w, int h, int posX, int posY, int fps)
 {
-	 
+	 // create a sprite object for the explosion
 	this->explosionSprite = new Sprite(load_bitmap("assets/sprites/explosion.bmp", NULL),
 		w, h,
 		1, 14, 14,
@@ -15,7 +15,7 @@ Explosion::Explosion( int w, int h, int posX, int posY, int fps)
 Explosion::Explosion( int size, int posX, int posY, int fps)
 {
 	int sizeInPx = 0;	
-
+	//check for predefined sizes for the explosion
 	switch (size) {
 		case SMALL_EXPLOSION:
 			sizeInPx = 50 * SCALING_FACTOR_RELATIVE_TO_1280;
@@ -30,7 +30,7 @@ Explosion::Explosion( int size, int posX, int posY, int fps)
 			break;
 	}
 
-
+ 	// create a sprite object for the explosion
 	this->explosionSprite = new Sprite(load_bitmap("assets/sprites/explosion.bmp", NULL),
 		sizeInPx, sizeInPx,
 		1, 14, 14,

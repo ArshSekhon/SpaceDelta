@@ -7,12 +7,12 @@ DIALOG_PLAYER* creditsPlayer;
 CreditsScreen::CreditsScreen(GameState* gameState) {
 	this->gameState = gameState;
 	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
-
-	this->credits = (char*)"Questions for the quizes are obtained from the back exercises of the book Game Programming All in One by Jonathan S. Harbour.\n\n\nThe UI elements were derived from https://opengameart.org/content/fantasy-ui-elements-by-ravenmore \n\nBackground music was obtained from: http://www.partnersinrhyme.com/midi/index.shtml \n\nSound FX were obtained from: http://www.wavsource.com/sfx/sfx.htm";
+	// The text to be displayed on the screen
+	this->credits = (char*)"The player sprite, background and some other UI elements of the game was created by the author of the game: Arsh Sekhon \n\nThe enemy sprites, laser sprites, mine sprite, some other sprites and UI elements of the game were derived from or inspired by https://opengameart.org/content/complete-spaceship-game-art-pack \n\n\nThe music for the game was obtained from: http://fredrikj.net/music/ and is unchanged. The music was publsihed under Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0) license. \n\nSound FX were obtained from following sources:\nhttp://www.wavsource.com/sfx/sfx.htm \nhttps://opengameart.org/content/laser-fire \nhttps://opengameart.org/content/big-explosion";
 }
 
 void CreditsScreen::drawCreditsScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont ) {
-
+	//render background
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
 
 	
