@@ -5,7 +5,7 @@ EnemyShip::EnemyShip(int shipType, std::vector<Bullet*>* bullets, int initPosX, 
 	this->shipType = shipType;
 	this->bullets = bullets;
 	// scale speed of the enemyship according to its skill level
-	this->velY = this->velX = 30 * ((skillLevel * 1.0) / 10.0);
+	this->velY = this->velX = 30 * ((skillLevel * 1.0) / 10.0)* SCALING_FACTOR_RELATIVE_TO_1280;
 	// randomly chose horizontal direction of motion
 	this->swervingLeft = std::rand() % (2);
 

@@ -3,7 +3,7 @@
 MineBomb::MineBomb( int initPosX, int initPosY, int difficultyLevel)
 {	// initialize variables
 	this->difficultyLevel = difficultyLevel;
-	this->velY = this->velX = 30 * ((difficultyLevel * 1.0) / 10.0);
+	this->velY = this->velX = 30 * ((difficultyLevel * 1.0) / 10.0) * SCALING_FACTOR_RELATIVE_TO_1280;
 	// create a sprite object
 	this->bombSprite = new Sprite(load_bitmap("assets/sprites/mines.bmp", NULL), this->size, this->size, 1, 2, 2, 2, this->velX, this->velY, this->delayX, this->delayY, initPosX, initPosY, 1);
 	srand(time(NULL));
