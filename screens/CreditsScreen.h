@@ -27,6 +27,7 @@ public:
 	 * @param gameState Pointer to the game state struct that is shared by the entire game.
 	 */
 	CreditsScreen(GameState* gameState);
+	~CreditsScreen();
 	/**
 	 * @brief This function draws credits menu on to the buffer passed as an arguement and also handles mouse clicks for the credits menu screen.
 	 * 

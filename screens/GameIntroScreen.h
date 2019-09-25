@@ -39,6 +39,7 @@ public:
 	 * 
 	 */
 	GameIntroScreen(GameState* gameState, ConfigManager* configManager);
+	~GameIntroScreen();
 
 
 	/**

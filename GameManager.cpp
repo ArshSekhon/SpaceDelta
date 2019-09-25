@@ -227,6 +227,11 @@ void GameManager::exit() {
 	if (menuBackground != NULL)
 		destroy_bitmap(menuBackground);
 
+	gameIntroScreen->~GameIntroScreen();
+	creditsScreen->~CreditsScreen();
+	gameScreen->~GameScreen();
+	
+
 	allegro_exit();
 }
 

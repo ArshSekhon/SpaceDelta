@@ -11,6 +11,14 @@ GameIntroScreen::GameIntroScreen(GameState* gameState, ConfigManager* configMana
 	this->introText = (char*)"Welcome to Space Delta: Guardians of Galaxy! This is the year 2090, Milky Way is under an attack by aliens from Andromeda Galaxy. You were the commander of a fleet that Earth sent to defend Milky Way but all of the other ships in your fleet have been destroyed. You're the only survivour! \n\nEarth is negotiating with other alien allies from Milky Way and is in a process of sending a backup but it may not arrive soon. \n\nHold your position and destroy as many enemy ships as possible. You are the only guardian of the milky way in the line of fire, don't get killed! \n\nMilky Way needs your help!";
 }
 
+GameIntroScreen::~GameIntroScreen() {
+
+	if (introPlayer) {
+		shutdown_dialog(introPlayer);
+		introPlayer = NULL;
+	}
+}
+
 void GameIntroScreen::drawIntroScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont) {
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
