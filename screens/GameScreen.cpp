@@ -305,7 +305,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 		else
 		{
 			//check all mine bombs
-			for (int j = 0; j < this->mineBombs.size(); j++)
+			for (int j = 0; j < this->mineBombs.size() && i < this->bullets.size(); j++)
 			{
 				otherSprite = this->mineBombs[j]->getSprite();
 				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) { 
@@ -330,7 +330,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			}
 
 			//check all bullets
-			for (int j = 0; j < this->bullets.size(); j++)
+			for (int j = 0; j < this->bullets.size() && i < this->bullets.size(); j++)
 			{
 				if (this->bullets[j]->isEnemyBullet) {
 					otherSprite = this->bullets[j]->getSprite();
@@ -356,7 +356,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			} 
 
 			//check all enemies for hit
-			for (int j = 0; j < this->enemyShips.size(); j++) {
+			for (int j = 0; j < this->enemyShips.size() && i < this->bullets.size(); j++) {
 				otherSprite = this->enemyShips[j]->getSprite();
 				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 5, otherSprite->getH() / 5)) {
 					//collision has happened
