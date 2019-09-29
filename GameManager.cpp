@@ -234,6 +234,7 @@ void GameManager::exit() {
 	gameScreen->~GameScreen();
 
 	unload_datafile(fonts_datafile);
+	unload_datafile(bitmap_datafile);
 
 	allegro_exit();
 }
