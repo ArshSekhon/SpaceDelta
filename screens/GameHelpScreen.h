@@ -32,11 +32,10 @@ public:
 	 * 
 	 * @brief Construct a new GameIntroScreen object that would be used to show an intro screen when game start.
 	 * 
-	 * @param gameState Pointer to the game state struct that is shared by the entire game
-	 * @param configManager Pointer to the ConfigManager object that would be used to load and save the config related to game intro screen
+	 * @param gameState Pointer to the game state struct that is shared by the entire game 
 	 * 
 	 */
-	GameHelpScreen(GameState* gameState);
+	GameHelpScreen(GameState* gameState );
 
 
 	/**
@@ -44,7 +43,12 @@ public:
 	 * and also handles mouse click events for the same.
 	 * 
 	 * @param buffer Screen buffer or other buffer where the game intro screen screen has to be drawn.
+	 * @param backgroundBitmap Pointer the bitmap to be used as the background
+	 * @param bannerBitmap Pointer the bitmap for the banner
+	 * @param headingFont Pointer to the font used for headings
+	 * @param textFont Pointer to the font used for text
+	 * @param buttonText Text to display on the button used for closing the screen
 	 */
-	void drawHelpScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont, char* buttonText);
+	void drawHelpScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* headingFont, FONT* textFont, char* buttonText);
 };
 

@@ -5,12 +5,10 @@
 
 
 
-MainMenu::MainMenu(GameState* gs) { 
+MainMenu::MainMenu(GameState* gs, DATAFILE* bitmap_datafile) { 
 	this->gameState = gs;
-	this->background = load_bitmap(MAIN_MENU_BUTTON_SPRITE, NULL);
-	//this->gameTitle = load_bitmap("assets/main-menu/GameTitleBanner.bmp", NULL);
-	//this->bannerBitmap = load_bitmap("assets/ui-elem/Banner_Sq.bmp", NULL);
-	this->buttonsBitmap = load_bitmap("assets/ui-elem/mainmenu-buttons.bmp", NULL);
+	this->background = (BITMAP*)bitmap_datafile[MAINMENU_BG_BMP].dat;
+	this->buttonsBitmap = (BITMAP*)bitmap_datafile[MAINMENU_BUTTONS_BMP].dat;
 	 
 }
 

@@ -1,15 +1,16 @@
 #include "PlayerShip.h" 
 
-PlayerShip::PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager) {
+PlayerShip::PlayerShip(DATAFILE* sprites_datafile, std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager) {
 	// initialize the vars
 	this->soundManager = soundManager;
 	this->bullets = bullets;
+	this->sprites_datafile = sprites_datafile;
 	this->bulletShootDelay = bulletShootDelay;
 	this->playerShipSize = SCREEN_W * .15625 / 1.5; 
 	double shipSpeed = 7 * ((SCREEN_W * 1.0) / 1280);
 	// create sprite object
 	this->shipSprite = new Sprite(
-									load_bitmap("assets/sprites/player-spritesheet.bmp", NULL),
+									(BITMAP*) sprites_datafile[PLAYER_SPRITESHEET_BMP].dat,
 									playerShipSize, playerShipSize, // w, h
 									1, 6,		// ssheetNumRows, ssheetNumCols
 									6, 15,		// numOfFrames ,  frameDelay
@@ -46,13 +47,13 @@ void PlayerShip::showShipAndHandleControls(BITMAP* buffer) {
 		this->lastBulletShootTime = clock();
 
 		if (dualBullets) {
-			this->bullets->push_back((Bullet*)new Bullet( 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3 -  this->playerShipSize / 4, this->shipSprite->getY()));
+			this->bullets->push_back((Bullet*)new Bullet((BITMAP*)sprites_datafile[BULLET_BMP].dat, (BITMAP*)sprites_datafile[BULLET_RED_BMP].dat, 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3 -  this->playerShipSize / 4, this->shipSprite->getY()));
 
-			this->bullets->push_back((Bullet*)new Bullet( 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3 + this->playerShipSize / 4, this->shipSprite->getY()));
+			this->bullets->push_back((Bullet*)new Bullet((BITMAP*)sprites_datafile[BULLET_BMP].dat, (BITMAP*)sprites_datafile[BULLET_RED_BMP].dat, 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3 + this->playerShipSize / 4, this->shipSprite->getY()));
 
 		}
 		else {
-			this->bullets->push_back((Bullet*)new Bullet(15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3, this->shipSprite->getY()));
+			this->bullets->push_back((Bullet*)new Bullet((BITMAP*)sprites_datafile[BULLET_BMP].dat, (BITMAP*)sprites_datafile[BULLET_RED_BMP].dat, 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getX() + this->playerShipSize / 2.3, this->shipSprite->getY()));
 		}
 
 		// play laser shoot sound

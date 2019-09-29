@@ -1,5 +1,6 @@
 #pragma once
 #include "Constants.h"
+#include "assets/sound_defines.h" 
 #include <allegro.h>
 
 //SOUND EFFECTS
@@ -18,7 +19,8 @@ private:
 	SAMPLE* laserSound;
 	SAMPLE* clickSound;
 	SAMPLE* explosion; 
-	GameState* gameState;
+	GameState* gameState;	
+	DATAFILE* sounds_datafile; 
 
 public:
 	/**
@@ -27,6 +29,7 @@ public:
 	 * @param gameState Pointer to the struct that represents game's state
 	 */
 	SoundManager(GameState* gameState);
+	~SoundManager();
 	/**
 	 * @brief Starts playing background game music.
 	 * 

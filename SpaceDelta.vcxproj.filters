@@ -86,12 +86,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\ui-elem\loading-banner.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ui-elem\banner.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\sprites\bluebigspaceship.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -119,43 +113,10 @@
     <Image Include="assets\sprites\red-smallship.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\ui-elem\font.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\backgrounds\mainmenu-bg.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\backgrounds\background-menus.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\backgrounds\game-bg.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ui-elem\mainmenu-buttons.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ui-elem\cursor-hand.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ui-elem\pointer.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\ui-elem\help-banner.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\sprites\player-spritesheet.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\sprites\player-spritesheet.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\sprites\hub-red.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\sprites\explosion.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\sprites\mines.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -217,13 +178,23 @@
     <ClInclude Include="entities\MineBomb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="assets\font_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\sound_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assets\bmp_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SpaceDelta.cfg" />
-    <None Include="assets\font-36.pcx" />
-    <None Include="assets\font-tnr-16.pcx" />
     <None Include="assets\sounds\music.mid" />
     <None Include=".gitignore" />
+    <None Include="assets\fonts.dat" />
+    <None Include="assets\sounds.dat" />
+    <None Include="assets\bmps.dat" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sounds\boing.wav">
@@ -233,9 +204,6 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="assets\sounds\cheering.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sounds\click.wav">
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="assets\sounds\whah_whah.wav">

@@ -19,6 +19,8 @@ public:
 	/**
 	 * @brief Construct a new Bullet object
 	 * 
+	 * @param playerBulletBMP pointer to the bitmap for the player bullet (Can be null when creating enemy bullets)
+	 * @param enemyBulletBMP pointer to the bitmap for enemy bullet (Can be null when creating player bullets)
 	 * @param w Width of the bullet when rendered on the screen
 	 * @param h Height of the bullet when rendered on the screen
 	 * @param speedY Number of pixels the bullet should move in Y-direction after delayY milliseconds have elasped
@@ -28,7 +30,7 @@ public:
 	 * @param isEnemyBullet Specifies if the bullet is an enemy bullet or bullet from player
 	 * @param damageVal The value by which health of the ship decreases when hit by the bullet
 	 */
-	Bullet(int w, int h, double speedY, int delayY, int posX, int posY, bool isEnemyBullet = false, int damageVal = 20);
+	Bullet(BITMAP* playerBulletBMP, BITMAP* enemyBulletBMP, int w, int h, double speedY, int delayY, int posX, int posY, bool isEnemyBullet = false, int damageVal = 20);
 	/**
 	 * @brief Destroy the Bullet object
 	 * 

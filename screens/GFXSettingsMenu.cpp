@@ -4,8 +4,7 @@
 GFXSettingsMenu::GFXSettingsMenu(GameState* gs, ConfigManager* configManager) {
 	this->gameState = gs;
 	this->configManager = configManager;
-
-	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+	 
 	this->gfxResOptions = new const char*[3]{"640x480","960x720","1280x960"};
 	this->gfxScreenModeOptions = new const char* [2]{ "Windowed", "Fullscreen" };
 	this->resolutionChangeArrows = new BoundingBox[2];;
@@ -31,7 +30,7 @@ GFXSettingsMenu::~GFXSettingsMenu() {
 	this->bannerBitmap = NULL;
 }
 
-int GFXSettingsMenu::drawGfxMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* font ) {
+int GFXSettingsMenu::drawGfxMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* font ) {
 	gameState->gameScreen = GAME_SCREEN_GFX_SETTINGS;
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);

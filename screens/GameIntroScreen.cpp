@@ -4,8 +4,7 @@ DIALOG gameIntroDialog = { d_textbox_proc, 0, 0,  0,  0,  0,  0, 0, 0, 0,   0, N
 
 GameIntroScreen::GameIntroScreen(GameState* gameState, ConfigManager* configManager) {
 	this->gameState = gameState;
-	this->configManager = configManager;
-	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+	this->configManager = configManager; 
 	 
 
 	this->introText = (char*)"Welcome to Space Delta: Guardians of Galaxy! This is the year 2090, Milky Way is under an attack by aliens from Andromeda Galaxy. You were the commander of a fleet that Earth sent to defend Milky Way but all of the other ships in your fleet have been destroyed. You're the only survivour! \n\nEarth is negotiating with other alien allies from Milky Way and is in a process of sending a backup but it may not arrive soon. \n\nHold your position and destroy as many enemy ships as possible. You are the only guardian of the milky way in the line of fire, don't get killed! \n\nMilky Way needs your help!";
@@ -19,7 +18,7 @@ GameIntroScreen::~GameIntroScreen() {
 	}
 }
 
-void GameIntroScreen::drawIntroScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont) {
+void GameIntroScreen::drawIntroScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* headingFont, FONT* textFont) {
 
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
 

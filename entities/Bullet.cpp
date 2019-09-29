@@ -1,11 +1,11 @@
 #include "Bullet.h"
 // constructor
-Bullet::Bullet(int w, int h, double speedY, int delayY, int posX, int posY, bool isEnemyBullet, int damageVal) {
+Bullet::Bullet(BITMAP* playerBulletBMP, BITMAP* enemyBulletBMP, int w, int h, double speedY, int delayY, int posX, int posY, bool isEnemyBullet, int damageVal) {
 	//set the exploded to false initially
 	this->exploded = false;
 	// create sprites for the bullets
 	if(!isEnemyBullet)
-		this->bulletSprite = new Sprite(load_bitmap("assets/sprites/bullet.bmp",NULL), 
+		this->bulletSprite = new Sprite(playerBulletBMP,
 									w, h, 
 									1, 1, 1, 
 									60, 
@@ -13,7 +13,7 @@ Bullet::Bullet(int w, int h, double speedY, int delayY, int posX, int posY, bool
 									0, delayY, 
 									posX, posY);
 	else
-		this->bulletSprite = new Sprite(load_bitmap("assets/sprites/bullet_red.bmp", NULL),
+		this->bulletSprite = new Sprite(enemyBulletBMP,
 			w, h,
 			1, 1, 1,
 			60,

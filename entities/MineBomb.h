@@ -13,14 +13,16 @@ public:
 	/**
 	 * @brief Construct a new Mine Bomb object
 	 * 
+	 * @param minebombBMP Pointer to the bitmap containing minebomb sprite
 	 * @param initPosX Initial x-position of the minebomb
 	 * @param initPosY Initial y-position of the minebomb
 	 * @param difficultyLevel Difficulty level of the minebomb i.e. how hard it should be to avoid or destroy the minebomb 
 	 */
-	MineBomb(int initPosX, int initPosY, int difficultyLevel);
+	MineBomb(BITMAP* minebombBMP, int initPosX, int initPosY, int difficultyLevel);
 	/**
 	 * @brief Construct a new Mine Bomb object
 	 * 
+	 * @param minebombBMP Pointer to the bitmap containing minebomb sprite
 	 * @param initPosX Initial x-position of the minebomb
 	 * @param initPosY Initial y-position of the minebomb
 	 * @param velX Number of pixels the bullet should move in X-direction after delayX milliseconds have elasped
@@ -29,7 +31,7 @@ public:
 	 * @param delayY Delay between the update of position of the bullet in Y-direction
 	 * @param difficultyLevel Difficulty level of the minebomb i.e. how hard it should be to avoid or destroy the minebomb 
 	 */
-	MineBomb(int initPosX, int initPosY, double velX, double velY, int delayX, int delayY, int difficultyLevel);
+	MineBomb(BITMAP* minebombBMP, int initPosX, int initPosY, double velX, double velY, int delayX, int delayY, int difficultyLevel);
 	/**
 	 * @brief Destroy the Mine Bomb object
 	 * 

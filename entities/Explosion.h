@@ -24,22 +24,24 @@ public:
 	/**
 	 * @brief Construct a new Explosion object
 	 * 
+	 * @param explosionBMP Pointer to the bitmap containing spritesheet for explosion
 	 * @param w Width of the explosion
 	 * @param h Height of the explosion
 	 * @param posX X-position of the explosion
 	 * @param posY Y-position of the explosion
 	 * @param fps Frames per Second for the explosion animation
 	 */
-	Explosion( int w, int h, int posX, int posY, int fps);
+	Explosion(BITMAP* explosionBMP, int w, int h, int posX, int posY, int fps);
 	/**
 	 * @brief Construct a new Explosion object
 	 * 
+	 * @param explosionBMP Pointer to the bitmap containing spritesheet for explosion
 	 * @param size Predefined size for the explosion in range of 0-2 (Small to Big)
 	 * @param posX X-position of the explosion
 	 * @param posY Y-position of the explosion
 	 * @param fps Frames per Second for the explosion animation
 	 */
-	Explosion( int size, int posX, int posY, int fps);
+	Explosion(BITMAP* explosionBMP, int size, int posX, int posY, int fps);
 	/**
 	 * @brief Renders the explosion to the bitmap
 	 * 

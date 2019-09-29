@@ -4,9 +4,9 @@ DIALOG creditsDialog = { d_textbox_proc, 0, 0,  0,  0,  0,  0, 0, 0, 0,   0, NUL
 
 DIALOG_PLAYER* creditsPlayer;
 // constructor to do the initializations
-CreditsScreen::CreditsScreen(GameState* gameState) {
-	this->gameState = gameState;
-	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+CreditsScreen::CreditsScreen(GameState* gameState ) {
+	this->gameState = gameState;  
+
 	// The text to be displayed on the screen
 	this->credits = (char*)"The player sprite, background and some other UI elements of the game was created by the author of the game: Arsh Sekhon \n\nThe enemy sprites, laser sprites, mine sprite, some other sprites and UI elements of the game were derived from or inspired by https://opengameart.org/content/complete-spaceship-game-art-pack \n\n\nThe music for the game was obtained from: http://fredrikj.net/music/ and is unchanged. The music was publsihed under Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0) license. \n\nSound FX were obtained from following sources:\nhttp://www.wavsource.com/sfx/sfx.htm \nhttps://opengameart.org/content/laser-fire \nhttps://opengameart.org/content/big-explosion";
 }
@@ -18,7 +18,7 @@ CreditsScreen::~CreditsScreen() {
 		creditsPlayer = NULL;
 	}
 }
-void CreditsScreen::drawCreditsScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont, FONT* textFont ) {
+void CreditsScreen::drawCreditsScreenAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* headingFont, FONT* textFont ) {
 	//render background
 	stretch_blit(backgroundBitmap, buffer, 0, 0, backgroundBitmap->w, backgroundBitmap->h, 0, 0, SCREEN_W, SCREEN_H);
 

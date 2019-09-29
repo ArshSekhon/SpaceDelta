@@ -1,11 +1,11 @@
 #include "./MineBomb.h" 
 
-MineBomb::MineBomb( int initPosX, int initPosY, int difficultyLevel)
+MineBomb::MineBomb(BITMAP* minebombBMP, int initPosX, int initPosY, int difficultyLevel)
 {	// initialize variables
 	this->difficultyLevel = difficultyLevel;
 	this->velY = this->velX = 30 * ((difficultyLevel * 1.0) / 10.0) * SCALING_FACTOR_RELATIVE_TO_1280;
 	// create a sprite object
-	this->bombSprite = new Sprite(load_bitmap("assets/sprites/mines.bmp", NULL), this->size, this->size, 1, 2, 2, 2, this->velX, this->velY, this->delayX, this->delayY, initPosX, initPosY, 1);
+	this->bombSprite = new Sprite(minebombBMP, this->size, this->size, 1, 2, 2, 2, this->velX, this->velY, this->delayX, this->delayY, initPosX, initPosY, 1);
 	srand(time(NULL));
 	// initialize variables with random values
 	this->swerveDistance = std::rand()%(SCREEN_W/4);
@@ -15,7 +15,7 @@ MineBomb::MineBomb( int initPosX, int initPosY, int difficultyLevel)
 	
 }
 
-MineBomb::MineBomb( int initPosX, int initPosY, double velX, double velY, int delayX, int delayY, int difficultyLevel) 
+MineBomb::MineBomb(BITMAP* minebombBMP, int initPosX, int initPosY, double velX, double velY, int delayX, int delayY, int difficultyLevel)
 {
 	// initialize variables
 	this->velX = velX;
@@ -23,7 +23,7 @@ MineBomb::MineBomb( int initPosX, int initPosY, double velX, double velY, int de
 	this->delayX = delayX;
 	this->delayY = delayY;
 	// create a sprite object
-	this->bombSprite = new Sprite(load_bitmap("assets/sprites/mines.bmp", NULL), this->size, this->size, 1, 2, 2, 2, this->velX, this->velY, this->delayX, this->delayY, initPosX, initPosY, 1);
+	this->bombSprite = new Sprite(minebombBMP, this->size, this->size, 1, 2, 2, 2, this->velX, this->velY, this->delayX, this->delayY, initPosX, initPosY, 1);
 	
 }
 

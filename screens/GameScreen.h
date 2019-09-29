@@ -12,6 +12,7 @@
 #include "../Utility.h"
 #include "../Sprite.h"
 #include "../SoundManager.h"
+#include "../assets/bmp_defines.h"
 #include <allegro.h>
 
 #define OPTION_COLOR makecol(11, 255, 255);
@@ -64,14 +65,17 @@ private:
 	int exitToMainMenuButtonColor, restartGameButtonColor;
 	SoundManager* soundManager;
 
+	DATAFILE* bitmaps_datafile;
+
 public:
 	/**
 	 * @brief Construct a new Game Screen object
 	 * 
 	 * @param gameState Pointer to the game state struct
 	 * @param soundManager Pointer to the sound manager object
+	 * @param bitmap_datafile Pointer to the datafile containing bitmaps
 	 */
-	GameScreen(GameState* gameState, SoundManager* soundManager);
+	GameScreen(GameState* gameState, SoundManager* soundManager, DATAFILE* bitmap_datafile);
 	/**
 	 * @brief Destroy the Game Screen object
 	 * 

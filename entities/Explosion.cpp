@@ -1,10 +1,10 @@
 #include "Explosion.h"
 
 
-Explosion::Explosion( int w, int h, int posX, int posY, int fps)
+Explosion::Explosion(BITMAP* explosionBMP, int w, int h, int posX, int posY, int fps)
 {
 	 // create a sprite object for the explosion
-	this->explosionSprite = new Sprite(load_bitmap("assets/sprites/explosion.bmp", NULL),
+	this->explosionSprite = new Sprite(explosionBMP,
 		w, h,
 		1, 14, 14,
 		fps, 0, 0,
@@ -12,7 +12,7 @@ Explosion::Explosion( int w, int h, int posX, int posY, int fps)
 		posX - w/2, posY - h/2,0);
 }
 
-Explosion::Explosion( int size, int posX, int posY, int fps)
+Explosion::Explosion(BITMAP* explosionBMP, int size, int posX, int posY, int fps)
 {
 	int sizeInPx = 0;	
 	//check for predefined sizes for the explosion
@@ -31,7 +31,7 @@ Explosion::Explosion( int size, int posX, int posY, int fps)
 	}
 
  	// create a sprite object for the explosion
-	this->explosionSprite = new Sprite(load_bitmap("assets/sprites/explosion.bmp", NULL),
+	this->explosionSprite = new Sprite(explosionBMP,
 		sizeInPx, sizeInPx,
 		1, 14, 14,
 		60, 0, 0,

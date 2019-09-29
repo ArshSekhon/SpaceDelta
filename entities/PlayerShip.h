@@ -4,6 +4,7 @@
 #include "../Sprite.h"
 #include "../constants.h"
 #include "../SoundManager.h"
+#include "../assets/bmp_defines.h"
 
 /**
  * @brief Used to represent player ship in the game
@@ -29,15 +30,18 @@ private:
 	//pointer to the sound manager (required for playing sound effects)
 	SoundManager* soundManager;
 
+	DATAFILE* sprites_datafile;
+
 public:
 	/**
 	 * @brief Construct a new Player Ship object
 	 * 
+	 * @param sprites_datafile Pointer to the datafile object containing sprites
 	 * @param bullets Pointer to the bullets vector
 	 * @param bulletShootDelay Delay in milliseconds after which player can shoot 
 	 * @param soundManager Pointer to the sound manager
 	 */
-	PlayerShip(std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager);
+	PlayerShip(DATAFILE* sprites_datafile, std::vector<Bullet*>* bullets, int bulletShootDelay, SoundManager* soundManager);
 	/**
 	 * @brief Destroy the Player Ship object
 	 * 

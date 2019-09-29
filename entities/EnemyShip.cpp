@@ -1,9 +1,11 @@
 #include "EnemyShip.h"
 
-EnemyShip::EnemyShip(int shipType, std::vector<Bullet*>* bullets, int initPosX, int initPosY, double skillLevel) {
+EnemyShip::EnemyShip(DATAFILE* sprites_datafile, int shipType, std::vector<Bullet*>* bullets, int initPosX, int initPosY, double skillLevel) {
 	// initialize values
 	this->shipType = shipType;
 	this->bullets = bullets;
+	this->sprites_datafile = sprites_datafile;
+
 	// scale speed of the enemyship according to its skill level
 	this->velY = this->velX = 30 * ((skillLevel * 1.0) / 10.0)* SCALING_FACTOR_RELATIVE_TO_1280;
 	// randomly chose horizontal direction of motion
@@ -11,14 +13,14 @@ EnemyShip::EnemyShip(int shipType, std::vector<Bullet*>* bullets, int initPosX, 
 
 	// create a new sprite object depending on the ship type
 	if (this->shipType == ENEMY_SHIP_BIG)
-		this->shipSprite = new Sprite(load_bitmap("assets/sprites/redbig.bmp", NULL),
+		this->shipSprite = new Sprite((BITMAP*) sprites_datafile[REDBIG_BMP].dat,
 			bigEnemyShipWidth, bigEnemyShipHeight,
 			1, 8, 8, 10,
 			velX, velY, 1, 1, 
 			initPosX, initPosY, 1
 		);
 	else
-		this->shipSprite = new Sprite(load_bitmap("assets/sprites/redsmallship.bmp", NULL),
+		this->shipSprite = new Sprite((BITMAP*)sprites_datafile[REDSMALLSHIP_BMP].dat,
 			smallEnemyShipWidth, smallEnemyShipHeight,
 			1, 5, 5, 10,
 			velX, velY, 1, 1, 
@@ -58,7 +60,7 @@ void EnemyShip::update()
 		if (clock() - lastBulletShot > enemyShootDelay) {
 			// shoot a bullet
 			lastBulletShot = clock();
-			this->bullets->push_back(new Bullet(15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getCenterX(), this->shipSprite->getY() + this->shipSprite->getH(), true, 20));
+			this->bullets->push_back(new Bullet((BITMAP*)sprites_datafile[BULLET_BMP].dat, (BITMAP*)sprites_datafile[BULLET_RED_BMP].dat, 15 * SCALING_FACTOR_RELATIVE_TO_960, 35 * SCALING_FACTOR_RELATIVE_TO_960, 10 * SCALING_FACTOR_RELATIVE_TO_960, 8, this->shipSprite->getCenterX(), this->shipSprite->getY() + this->shipSprite->getH(), true, 20));
 			// randomly set time for the next bullet shooting
 			this->enemyShootDelay = std::rand() % (5000) + 500;
 

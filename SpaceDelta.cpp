@@ -19,6 +19,7 @@ int main(void ) {
 	GameManager gameManager(&gs);
 
 	gameManager.init(); 
+
 	gameManager.runGameLoop();
 	gameManager.exit();
 
@@ -27,3 +28,4 @@ int main(void ) {
 	return 0;
 }
 END_OF_MAIN()
+ 

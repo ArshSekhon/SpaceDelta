@@ -108,32 +108,22 @@
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\backgrounds\background-menus.bmp" />
-    <Image Include="assets\backgrounds\game-bg.bmp" />
-    <Image Include="assets\backgrounds\mainmenu-bg.bmp" />
     <Image Include="assets\sprites\bluebigspaceship.png" />
     <Image Include="assets\sprites\BlueSmallShip.png" />
     <Image Include="assets\sprites\bullet.png" />
     <Image Include="assets\sprites\bullet_red.png" />
-    <Image Include="assets\sprites\explosion.bmp" />
     <Image Include="assets\sprites\hub-red.bmp" />
     <Image Include="assets\sprites\hub-red.png" />
-    <Image Include="assets\sprites\mines.bmp" />
     <Image Include="assets\sprites\mines.png" />
     <Image Include="assets\sprites\mothership_try.png" />
-    <Image Include="assets\sprites\player-spritesheet.bmp" />
     <Image Include="assets\sprites\player-spritesheet.png" />
     <Image Include="assets\sprites\red-smallship.png" />
     <Image Include="assets\sprites\redbig.png" />
-    <Image Include="assets\ui-elem\banner.bmp" />
-    <Image Include="assets\ui-elem\help-banner.bmp" />
-    <Image Include="assets\ui-elem\mainmenu-buttons.bmp" />
-    <Image Include="assets\ui-elem\cursor-hand.bmp" />
-    <Image Include="assets\ui-elem\font.bmp" />
-    <Image Include="assets\ui-elem\loading-banner.bmp" />
-    <Image Include="assets\ui-elem\pointer.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assets\bmp_defines.h" />
+    <ClInclude Include="assets\font_defines.h" />
+    <ClInclude Include="assets\sound_defines.h" />
     <ClInclude Include="entities\EnemyShip.h" />
     <ClInclude Include="entities\Bullet.h" />
     <ClInclude Include="ConfigManager.h" />
@@ -156,8 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="assets\font-36.pcx" />
-    <None Include="assets\font-tnr-16.pcx" />
+    <None Include="assets\bmps.dat" />
+    <None Include="assets\fonts.dat" />
+    <None Include="assets\sounds.dat" />
     <None Include="assets\sounds\music.mid" />
     <None Include="SpaceDelta.cfg" />
   </ItemGroup>
@@ -165,7 +156,6 @@
     <Media Include="assets\sounds\boing.wav" />
     <Media Include="assets\sounds\buzzer.wav" />
     <Media Include="assets\sounds\cheering.wav" />
-    <Media Include="assets\sounds\click.wav" />
     <Media Include="assets\sounds\whah_whah.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

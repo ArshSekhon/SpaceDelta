@@ -2,14 +2,22 @@
 
 SoundManager::SoundManager(GameState* gameState) {
 	this->gameState = gameState;
+	sounds_datafile = load_datafile("assets/sounds.dat"); 
 	//load music
-	this->bgMusic = load_midi("assets/sounds/music.midi");
+	this->bgMusic = (MIDI*)sounds_datafile[MUSIC_MID].dat;
 	// load sound samples
 	//https://opengameart.org/content/laser-fire 
-	this->laserSound = load_wav("assets/sounds/laser1.wav");
+	this->laserSound = (SAMPLE*)sounds_datafile[LASER1_WAV].dat;
 	//https://opengameart.org/content/big-explosion
-	this->explosion = load_wav("assets/sounds/explosion.wav");
-	this->clickSound = load_wav("assets/sounds/click.wav"); 
+	this->explosion = (SAMPLE*)sounds_datafile[EXPLOSION_WAV].dat;
+	this->clickSound = (SAMPLE*)sounds_datafile[CLICK_WAV].dat;
+
+	if (!laserSound || !explosion || !clickSound || !bgMusic) {		allegro_message("Error loading sounds.dat"); 	}   
+ 
+}
+
+SoundManager::~SoundManager() {
+	unload_datafile(sounds_datafile); 
 }
 
 void SoundManager::playBgMusic(int loop) {

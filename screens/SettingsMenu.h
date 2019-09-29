@@ -41,7 +41,10 @@ public:
 	 * and also handles mouse click events for the same.
 	 * 
 	 * @param buffer Screen buffer or other buffer where the Settings screen has to be drawn.
+	 * @param backgroundBitmap Pointer the bitmap to be used as the background 
+	 * @param bannerBitmap Pointer the bitmap for the banner
+	 * @param headingFont Pointer to the font used for text
 	 */
-	void drawSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, FONT* headingFont);
+	void drawSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* headingFont);
 };
 

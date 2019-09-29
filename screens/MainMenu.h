@@ -1,5 +1,6 @@
 #pragma once 
 #include "../Constants.h"
+#include "../assets/bmp_defines.h"
 #include <allegro.h>
 #define PLAY_BUTTON 1
 #define OPTIONS_BUTTON 2
@@ -22,8 +23,9 @@ public:
 	 * @brief Construct a new MainMenu object that would be used to create the Main menu
 	 * 
 	 * @param gs Pointer to the game state struct that is shared by the entire game 
+	 * @param bitmap_datafile Pointer to the datafile object containing the bitmaps
 	 */
-	MainMenu(GameState* gs);
+	MainMenu(GameState* gs, DATAFILE* bitmap_datafile);
 
 	/**
 	 * @brief Draws main menu on to the buffer passed as an arguement 

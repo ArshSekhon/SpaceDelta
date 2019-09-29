@@ -1,20 +1,19 @@
 #include "GameScreen.h" 
 
 
-GameScreen::GameScreen(GameState* gameState, SoundManager* soundManager)
+GameScreen::GameScreen(GameState* gameState, SoundManager* soundManager, DATAFILE* bitmaps_datafile)
 {
 	// initializations
 	this->gameState = gameState;
-	this->soundManager = soundManager; 
+	this->soundManager = soundManager;
+	this->bitmaps_datafile = bitmaps_datafile;
 	// load bitmaps
-	this->gameBackground = load_bitmap("assets/backgrounds/game-bg.bmp", NULL);
-	this->genericBackground = load_bitmap("assets/backgrounds/background-menus.bmp", NULL);
-	this->bannerBitmap = load_bitmap("assets/ui-elem/banner.bmp", NULL);
+	this->gameBackground =  (BITMAP*) bitmaps_datafile[GAME_BG_BMP].dat;
+	this->genericBackground =  (BITMAP*) bitmaps_datafile[BACKGROUND_MENUS_BMP].dat;
+	this->bannerBitmap = (BITMAP*)bitmaps_datafile[BANNER_BMP].dat;
 	// create new playerships and minebombs
-	this->playerShip = new PlayerShip(&this->bullets, 100, this->soundManager); 
-	this->mineBombs.push_back(new MineBomb(200,100,1)); 
-	this->mineBombs.push_back(new MineBomb((std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
-
+	this->playerShip = new PlayerShip(bitmaps_datafile, &this->bullets, 100, this->soundManager);
+	this->mineBombs.push_back(new MineBomb((BITMAP*)bitmaps_datafile[MINES_BMP].dat, (std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
 	  
 	srand(time(NULL)); 
 	this->mineReleaseDelay = std::rand() % (5000);
@@ -173,7 +172,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 		this->mineBombs.clear();
 		this->bullets.clear();
 
-		this->playerShip = new PlayerShip(&this->bullets, 100, this->soundManager);
+		this->playerShip = new PlayerShip(bitmaps_datafile, &this->bullets, 100, this->soundManager);
 		this->gameState->health = 100;
 		this->gameState->currentScore = 0;
 		this->gameOverTime = -1;
@@ -246,7 +245,7 @@ void GameScreen::drawGameScreenAndHandleInput(BITMAP* buffer, FONT* headingFont,
 	if (this->gameState->health <= 0 && gameOverTime==-1) {
 
 		//add explosion
-		this->explosions.push_back(new Explosion(BIG_EXPLOSION, playerShip->getSprite()->getCenterX(), playerShip->getSprite()->getCenterY(), 20));
+		this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, BIG_EXPLOSION, playerShip->getSprite()->getCenterX(), playerShip->getSprite()->getCenterY(), 20));
 
 		this->soundManager->playSound(SOUND_EXPLOSION, 1000);
 
@@ -287,7 +286,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 					this->gameState->health = 0;
 
 				//add explosion
-				this->explosions.push_back(new Explosion(SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
+				this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
 
 				// play sound effect
 				this->soundManager->playSound(SOUND_EXPLOSION, 2000);
@@ -311,7 +310,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 				if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) { 
 
 					//add explosion
-					this->explosions.push_back(new Explosion(MEDIUM_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+					this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, MEDIUM_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
 					this->soundManager->playSound(SOUND_EXPLOSION, 1500);
 
 					//remove minebomb
@@ -336,7 +335,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 					otherSprite = this->bullets[j]->getSprite();
 					if (mainSprite->collided(buffer, mainSprite->getW() / 6, mainSprite->getH() / 5, otherSprite, otherSprite->getW() / 6, otherSprite->getH() / 6)) { 
 						//add explosion
-						this->explosions.push_back(new Explosion(SMALL_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+						this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, SMALL_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
 
 
 						//remove bullet
@@ -363,7 +362,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 					if (this->enemyShips[j]->makeBulletImpact(this->bullets[i]->getDamageVal()) == 0) 
 					{ 
 						//add explosion
-						this->explosions.push_back(new Explosion(BIG_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
+						this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, BIG_EXPLOSION, otherSprite->getCenterX(), otherSprite->getCenterY(), 5));
 
 						this->soundManager->playSound(SOUND_EXPLOSION, 1000);
 
@@ -379,7 +378,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 					else {
 
 						//add explosion
-						this->explosions.push_back(new Explosion(SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY(), 5));
+						this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, SMALL_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY(), 5));
 
 						this->gameState->currentScore += 5;
 					}
@@ -413,7 +412,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 				this->gameState->health = 0;
 
 			//add explosion
-			this->explosions.push_back(new Explosion(MEDIUM_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
+			this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, MEDIUM_EXPLOSION, mainSprite->getCenterX(), mainSprite->getY() + mainSprite->getH(), 5));
 
 
 			this->soundManager->playSound(SOUND_EXPLOSION, 1500);
@@ -448,7 +447,7 @@ void GameScreen::checkHits(BITMAP* buffer)
 			
 			int explosionType = (this->enemyShips[i]->getShipType() == ENEMY_SHIP_SMALL) ? MEDIUM_EXPLOSION : BIG_EXPLOSION;
 
-			this->explosions.push_back(new Explosion(explosionType, mainSprite->getCenterX(), mainSprite->getCenterY(), 5));
+			this->explosions.push_back(new Explosion((BITMAP*)bitmaps_datafile[EXPLOSION_BMP].dat, explosionType, mainSprite->getCenterX(), mainSprite->getCenterY(), 5));
 
 			if (this->gameState->health - this->enemyShips[i]->getCollisionDamage() > 0)
 				this->gameState->health -= this->enemyShips[i]->getCollisionDamage();
@@ -487,7 +486,7 @@ void GameScreen::triggerReleases()
 
 	//release mines
 	if (clock() - lastmineReleaseTime > mineReleaseDelay) {
-		this->mineBombs.push_back(new MineBomb((std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
+		this->mineBombs.push_back(new MineBomb((BITMAP*)bitmaps_datafile[MINES_BMP].dat, (std::rand() % ((int)(PLAY_REGION_W - 10 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, 1));
 		this->mineReleaseDelay = std::rand() % (3000) + 2000;
 		lastmineReleaseTime = clock();
 	}
@@ -497,7 +496,7 @@ void GameScreen::triggerReleases()
 	if (clock() - lastEnemyReleaseTime > enemyReleaseDelay) {
 
 		int shipType = (std::rand() % (5)<2) ? ENEMY_SHIP_SMALL : ENEMY_SHIP_BIG;
-		this->enemyShips.push_back(new EnemyShip(shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
+		this->enemyShips.push_back(new EnemyShip(bitmaps_datafile, shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
 		this->enemyReleaseDelay = std::rand() % (5000) + 2000;
 
 		lastEnemyReleaseTime = clock(); 

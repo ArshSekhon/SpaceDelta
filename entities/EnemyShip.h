@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "../Sprite.h"
 #include "../constants.h"
+#include "../assets/bmp_defines.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -20,13 +21,14 @@ public:
 	/**
 	 * @brief Construct a new Enemy Ship object
 	 * 
-	 * @param shipType Type of the ship: Pass ENEMY_SHIP_SMALL or 0 to create a smaller ship, Pass ENEMY_SHIP_BIG or 1 to create a bigger ship
+	 * @param sprites_datafile Pointer to the datafile object containing sprites
+	 * @param shipType Type of the ship: Pass ENEMY_SHIP_SMALL or 0 to create a smaller ship, Pass ENEMY_SHIP_BIG or 1 to create a bigger shipr ship
 	 * @param bullets Pointer to vector used to store the bullets in the game
 	 * @param initPosX Initial X-position of the Enemy
 	 * @param initPosY Initial Y-position of the Enemy
 	 * @param skillLevel The skill level of the Enemy
 	 */
-	EnemyShip(int shipType, std::vector<Bullet*>* bullets, int initPosX, int initPosY, double skillLevel=0);
+	EnemyShip(DATAFILE* sprites_datafile, int shipType, std::vector<Bullet*>* bullets, int initPosX, int initPosY, double skillLevel=0);
 	/**
 	 * @brief Destroy the Enemy Ship object
 	 * 
@@ -119,6 +121,8 @@ private:
 	Sprite* shipSprite;
 	// variable to store the skill level
 	double skillLevel ;
+
+	DATAFILE* sprites_datafile;
 
 	void update();	
 	int health = 100;  

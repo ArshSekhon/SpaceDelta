@@ -14,6 +14,9 @@
 #include "Constants.h"
 #include "ConfigManager.h" 
 
+#include "assets/font_defines.h"
+#include "assets/bmp_defines.h"
+
 #include <allegro.h>
 
 class GameManager
@@ -39,6 +42,9 @@ private:
 	BITMAP* loadingBanner;
 	BITMAP* menuBackground;
 	BITMAP* menuBanner;
+
+	DATAFILE* fonts_datafile;
+	DATAFILE* bitmap_datafile;
 
 	FONT* headingFont;
 	FONT* textFont;
