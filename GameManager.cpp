@@ -212,22 +212,7 @@ void GameManager::runGameLoop() {
 
 }
 
-void GameManager::exit() {
-	// do the cleanup
-	if (loadingBanner != NULL)
-		destroy_bitmap(loadingBanner);
-
-	if (cursor != NULL)
-		destroy_bitmap(cursor);
-
-	if (cursorHand != NULL)
-		destroy_bitmap(cursorHand);
-
-	if (menuBanner != NULL)
-		destroy_bitmap(menuBanner);
-
-	if (menuBackground != NULL)
-		destroy_bitmap(menuBackground);
+void GameManager::exit() { 
 
 	gameIntroScreen->~GameIntroScreen();
 	creditsScreen->~CreditsScreen();

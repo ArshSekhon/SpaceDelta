@@ -4,8 +4,7 @@
 SettingsMenu::SettingsMenu(GameState* gameState) { 
 	this->gameState = gameState;
 }
-SettingsMenu::~SettingsMenu() {
-	destroy_bitmap(this->bannerBitmap);
+SettingsMenu::~SettingsMenu() { 
 }
 
 void SettingsMenu::drawSettingsMenuAndHandleInput(BITMAP* buffer, BITMAP* backgroundBitmap, BITMAP* bannerBitmap, FONT* font) {

@@ -496,7 +496,7 @@ void GameScreen::triggerReleases()
 	if (clock() - lastEnemyReleaseTime > enemyReleaseDelay) {
 
 		int shipType = (std::rand() % (5)<2) ? ENEMY_SHIP_SMALL : ENEMY_SHIP_BIG;
-		this->enemyShips.push_back(new EnemyShip(bitmaps_datafile, shipType, &this->bullets, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
+		this->enemyShips.push_back(new EnemyShip(bitmaps_datafile, shipType, &this->bullets, playerShip, (std::rand() % ((int)(PLAY_REGION_W - 200 * SCALING_FACTOR_RELATIVE_TO_1280))), -55 * SCALING_FACTOR_RELATIVE_TO_1280, (shipType == ENEMY_SHIP_SMALL)?0.66:0.33));
 		this->enemyReleaseDelay = std::rand() % (5000) + 2000;
 
 		lastEnemyReleaseTime = clock(); 

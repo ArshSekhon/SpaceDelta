@@ -145,6 +145,7 @@ namespace Utility {
 
 		masked_stretch_blit(bitmapBg, buffer, 0, 0, bitmapBg->w, bitmapBg->h, box.x, box.y, box.w, box.h);
 
-	} 		
+	} 
+		
 
 }

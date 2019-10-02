@@ -25,8 +25,7 @@ GFXSettingsMenu::GFXSettingsMenu(GameState* gs, ConfigManager* configManager) {
 	}
 }
 
-GFXSettingsMenu::~GFXSettingsMenu() {
-	destroy_bitmap(this->bannerBitmap);
+GFXSettingsMenu::~GFXSettingsMenu() { 
 	this->bannerBitmap = NULL;
 }
 

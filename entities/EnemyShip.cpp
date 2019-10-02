@@ -1,10 +1,12 @@
 #include "EnemyShip.h"
 
-EnemyShip::EnemyShip(DATAFILE* sprites_datafile, int shipType, std::vector<Bullet*>* bullets, int initPosX, int initPosY, double skillLevel) {
+EnemyShip::EnemyShip(DATAFILE* sprites_datafile, int shipType, std::vector<Bullet*>* bullets, PlayerShip* playerShip, int initPosX, int initPosY, double skillLevel) {
 	// initialize values
 	this->shipType = shipType;
 	this->bullets = bullets;
 	this->sprites_datafile = sprites_datafile;
+
+	this->playerShip = playerShip;
 
 	// scale speed of the enemyship according to its skill level
 	this->velY = this->velX = 30 * ((skillLevel * 1.0) / 10.0)* SCALING_FACTOR_RELATIVE_TO_1280;
@@ -69,24 +71,44 @@ void EnemyShip::update()
 		this->shipSprite->move(SPRITE_MOVE_DOWN);
 
 
-		// make enemy ship go left and right to prevent it going off the screen
-		if (this->swervingLeft) 
-		{ 
-			if (this->shipSprite->getX() < 10)
-				swervingLeft = false;
 
+		// make enemy ship go left and right to prevent it going off the screen
+		if (this->swervingLeft)
+		{
 			this->shipSprite->move(SPRITE_MOVE_LEFT);
 		}
 		else
 		{
-			if(this->shipSprite->getX() + this->shipSprite->getW() > PLAY_REGION_W*0.95)
-			{
-				
-				swervingLeft = true;
-			}
-
 			this->shipSprite->move(SPRITE_MOVE_RIGHT);
 		}
+
+		 
+		 ///////////////////////////
+		// FINITE STATE MACHINES //
+	   ///////////////////////////
+
+		// if more than 1/4 left of the playable area
+		if (this->getCenterX() - this->playerShip->getSprite()->getCenterX() > PLAY_REGION_W / 4) {
+			swervingLeft = true;
+		}
+		else if (this->getCenterX() - this->playerShip->getSprite()->getCenterX() < -PLAY_REGION_W / 4) {
+			swervingLeft = false;
+		}
+		else {
+			// do nothing continue the way things are going
+		}
+		
+
+		if (this->shipSprite->getX() < 10)
+			swervingLeft = false;
+		else if (this->shipSprite->getX() + this->shipSprite->getW() > PLAY_REGION_W * 0.95)
+		{
+			swervingLeft = true;
+		}
+		else {
+			// do nothing continue the way things are going
+		}
+
 
 	}
 
