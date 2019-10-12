@@ -87,10 +87,11 @@ void EnemyShip::update()
 		// FINITE STATE MACHINES //
 	   ///////////////////////////
 
-		// if more than 1/4 left of the playable area
+		// if horizontal distance between position of player and enemy more than 1/4 left of the playable area and enemy is on right
 		if (this->getCenterX() - this->playerShip->getSprite()->getCenterX() > PLAY_REGION_W / 4) {
 			swervingLeft = true;
 		}
+		// if horizontal distance between position of player and enemy more than 1/4 left of the playable area and enemy is on left
 		else if (this->getCenterX() - this->playerShip->getSprite()->getCenterX() < -PLAY_REGION_W / 4) {
 			swervingLeft = false;
 		}
@@ -98,9 +99,11 @@ void EnemyShip::update()
 			// do nothing continue the way things are going
 		}
 		
-
+		// if the ship is expect to leave the screen (on left) -> start moving right
 		if (this->shipSprite->getX() < 10)
 			swervingLeft = false;
+			
+		// if the ship is expect to leave the screen (on right) -> start moving left
 		else if (this->shipSprite->getX() + this->shipSprite->getW() > PLAY_REGION_W * 0.95)
 		{
 			swervingLeft = true;
