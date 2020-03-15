@@ -15,7 +15,7 @@ Key features of the Game include:
 - Game features different enemy types that have different level of difficulty
 - Refined Collision detection
 
-*Note: Some graphics settings like high resolution or full screen mode may misbehave on newer version of windows due to compatibility issue as Allegro 4.4.2 came out in early 2000s*
+*Note: Some graphics settings like high resolution or full screen mode may misbehave on newer version of windows due to compatibility issue as Allegro 4.4.2 came out a long time ago*
 
 
 ## Install Instructions
